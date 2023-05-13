@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{862B7274-95B0-4FAD-B6C1-1806075DD3FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{7882DCD6-F419-4675-B450-9958D97F902A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B344F235-3BC0-4FA6-BB70-69FC3947F64F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bass.Shared", "Common\Bass.Shared\Bass.Shared.csproj", "{87C96CC3-2D44-443A-B316-1E9359BD8F16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bass.Shared.Tests", "Tests\Bass.Shared.Tests\Bass.Shared.Tests.csproj", "{C10B3CF7-3817-495F-8040-91B7D6B43933}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{87C96CC3-2D44-443A-B316-1E9359BD8F16} = {862B7274-95B0-4FAD-B6C1-1806075DD3FF}
+		{C10B3CF7-3817-495F-8040-91B7D6B43933} = {B344F235-3BC0-4FA6-BB70-69FC3947F64F}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{87C96CC3-2D44-443A-B316-1E9359BD8F16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87C96CC3-2D44-443A-B316-1E9359BD8F16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87C96CC3-2D44-443A-B316-1E9359BD8F16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87C96CC3-2D44-443A-B316-1E9359BD8F16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C10B3CF7-3817-495F-8040-91B7D6B43933}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C10B3CF7-3817-495F-8040-91B7D6B43933}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C10B3CF7-3817-495F-8040-91B7D6B43933}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C10B3CF7-3817-495F-8040-91B7D6B43933}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
