@@ -4,7 +4,7 @@ namespace ProjectKitt.WinForms.Services;
 
 public static class PointFCollectionExtensions
 {
-   public static IList<PointF> ToRotatePolygon(this ICollection<PointF> polygon, PointF center, float angle)
+   public static IList<PointF> ToRotatePolygon(this IEnumerable<PointF> polygon, PointF center, float angle)
    {
       var radians = ((double)angle).ToRadians();
       var rotated = new List<PointF>();

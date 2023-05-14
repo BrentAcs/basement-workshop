@@ -7,9 +7,15 @@ public class ViewPortRenderer
       ViewRect = viewRect;
    }
 
+   public ScaleFactor ScaleFactor { get; set; } = ScaleFactor.OneToOne;
    public ViewPortRendererOptions Options { get; set; } = new();
    public RectangleF ViewRect { get; set; }
    public PointF ViewCenter => GetViewCenter();
+
+   private PointF GetViewCenter()
+   {
+      return new PointF(ViewRect.Width / 2, ViewRect.Height / 2);
+   }
 
    private void DrawAxis(Graphics g)
    {
@@ -21,45 +27,44 @@ public class ViewPortRenderer
       g.DrawLine(pen, 0, ViewRect.Height / 2, ViewRect.Width, ViewRect.Height / 2);
    }
 
-   public void TestPaint(Graphics g, PointF point, float heading)
+   public void Render(Graphics g, IRenderedObject renderedObject, PointF point, float heading)
    {
       DrawAxis(g);
 
       var display = new PointF(ViewCenter.X + point.X, ViewCenter.Y - point.Y);
       using var pen = new Pen(Color.Red);
 
-      var points = new List<PointF>
-      {
-         new(display.X - 4, display.Y - 12),
-         new(display.X + 4, display.Y - 12),
-         new(display.X + 4, display.Y + 12),
-         new(display.X - 4, display.Y + 12),
-      };
+      var points = ComputeObjectsPoints(renderedObject, display);
       var rotated = points.ToRotatePolygon(display, heading);
       rotated.ClosePolygon();
       g.DrawPolygon(pen, rotated.ToArray());
    }
 
-   private PointF GetViewCenter()
+   private IEnumerable<PointF> ComputeObjectsPoints(IRenderedObject renderedObject, PointF center) =>
+      ComputeObjectsPoints(renderedObject.Points, center);
+
+   private IEnumerable<PointF> ComputeObjectsPoints(IEnumerable<PointF> objectPoints, PointF center)
    {
-      return new PointF(ViewRect.Width / 2, ViewRect.Height / 2);
+      var scaleFactor = ScaleFactor.GetScaleFactoValue();
+      var result = new List<PointF>();
+      foreach (var point in objectPoints)
+      {
+         result.Add(new PointF(center.X + point.X * scaleFactor, center.Y + point.Y * scaleFactor));
+      }
+
+      return result;
    }
-}
 
-public interface IRenderedObject
-{
-   IEnumerable<PointF> Points { get; }
-}
-
-public class TestRenderedObject : IRenderedObject
-{
-   private static IList<PointF> _points = new List<PointF>
-   {
-      new(-4, -12),
-      new(4, -12),
-      new(4, 12),
-      new(-4, 12),
-   };
-
-   public IEnumerable<PointF> Points => _points;
+   // public float GetScaleMultiplier()
+   // {
+   //    return ScaleFactor switch
+   //    {
+   //       ScaleFactor.OneToOne => 1.0f,
+   //       ScaleFactor.OneToFive => 0.5f,
+   //       ScaleFactor.OneToTen => 0.1f,
+   //       ScaleFactor.OneToOneHundred => 0.01f,
+   //       ScaleFactor.OneToOneThousand => 0.001f,
+   //       _ => throw new ArgumentOutOfRangeException()
+   //    };
+   // }
 }
