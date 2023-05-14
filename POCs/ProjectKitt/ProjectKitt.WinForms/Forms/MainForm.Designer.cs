@@ -1,4 +1,4 @@
-﻿namespace ProjectKitt.WinForms
+﻿namespace ProjectKitt.WinForms.Forms
 {
    partial class MainForm
    {

@@ -12,4 +12,10 @@
     <ProjectReference Include="..\..\..\Common\Bass.Shared\Bass.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>
