@@ -1,4 +1,5 @@
-﻿using System.Net.NetworkInformation;
+﻿using System.Drawing.Drawing2D;
+using System.Net.NetworkInformation;
 using Bass.Shared.Extensions;
 
 namespace ProjectKitt.WinForms;
@@ -6,6 +7,7 @@ namespace ProjectKitt.WinForms;
 public partial class MainForm : Form
 {
    private PointF _location = PointF.Empty;
+   private float _heading = 45f;
 
    public MainForm()
    {
@@ -19,7 +21,7 @@ public partial class MainForm : Form
       System.Diagnostics.Debug.WriteLine($"location: {_location}");
 
       var painter = new ViewPortPainter(ClientRectangle);
-      painter.TestPaint(e.Graphics, _location);
+      painter.TestPaint(e.Graphics, _location, _heading);
    }
 
    static PointF ComputeNew(PointF starting, float heading, float distance)
@@ -75,6 +77,8 @@ public class ViewPortPainter
       var radians = ((double)heading).ToRadians();
       //return new PointF((float)(starting.X + distance * Math.Sin(radians)), (float)(starting.Y + distance * Math.Cos(radians)));
 
+      var path = new GraphicsPath();
+      
 
 
 
