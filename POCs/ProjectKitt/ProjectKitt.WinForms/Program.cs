@@ -20,11 +20,17 @@ internal static class Program
       var starting = PointF.Empty;
       var distance = 10f;
 
-      var headings = new[] { 0f, 360f };
-      foreach (float heading in headings)
+      // var headings = new[] { 0f, 45f, 90f, 180f, 270f, 360f };
+      // foreach (float heading in headings)
+      // {
+      //    var ending = ComputeNew(starting, heading, 10);
+      //    System.Diagnostics.Debug.WriteLine($"heading: {heading} -> {ending}");
+      // }
+
+      for (float heading = 0; heading < 360; heading += 45)
       {
          var ending = ComputeNew(starting, heading, 10);
-         System.Diagnostics.Debug.WriteLine($"heading: {heading} -> {ending}");
+         // System.Diagnostics.Debug.WriteLine($"heading: {heading} -> {ending}");
       }
 
       //x = r cosθ and y = r sinθ
@@ -33,11 +39,16 @@ internal static class Program
    static PointF ComputeNew(PointF starting, float heading, float distance)
    {
       var radians = ((double)heading).ToRadians();
-      //var radians = heading;
+
+      // var radians = heading;
 
       var x = distance * Math.Sin(radians);
       var y = distance * Math.Cos(radians);
+
+      System.Diagnostics.Debug.WriteLine($"degrees: {heading} -> {radians} --- {x}, {y}");
+      // System.Diagnostics.Debug.WriteLine($"x, y: {x}, {y}");
+
       
-      return new PointF((float) x,(float) y);
+      return new PointF((float)x, (float)y);
    }
 }
