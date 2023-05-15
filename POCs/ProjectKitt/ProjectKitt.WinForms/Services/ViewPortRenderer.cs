@@ -34,10 +34,13 @@ public class ViewPortRenderer
       var display = new PointF(ViewCenter.X + point.X, ViewCenter.Y - point.Y);
       using var pen = new Pen(Color.Red);
 
-      var points = ComputeObjectsPoints(renderedObject, display);
-      var rotated = points.ToRotatePolygon(display, heading);
-      rotated.ClosePolygon();
-      g.DrawPolygon(pen, rotated.ToArray());
+      foreach (var objPoints in renderedObject.ComplexPoints)
+      {
+         var points = ComputeObjectsPoints(objPoints, display);
+         var rotated = points.ToRotatePolygon(display, heading);
+         rotated.ClosePolygon();
+         g.DrawPolygon(pen, rotated.ToArray());
+      }
    }
 
    private IEnumerable<PointF> ComputeObjectsPoints(IRenderedObject renderedObject, PointF center) =>
@@ -54,17 +57,4 @@ public class ViewPortRenderer
 
       return result;
    }
-
-   // public float GetScaleMultiplier()
-   // {
-   //    return ScaleFactor switch
-   //    {
-   //       ScaleFactor.OneToOne => 1.0f,
-   //       ScaleFactor.OneToFive => 0.5f,
-   //       ScaleFactor.OneToTen => 0.1f,
-   //       ScaleFactor.OneToOneHundred => 0.01f,
-   //       ScaleFactor.OneToOneThousand => 0.001f,
-   //       _ => throw new ArgumentOutOfRangeException()
-   //    };
-   // }
 }
