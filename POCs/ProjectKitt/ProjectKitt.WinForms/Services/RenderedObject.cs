@@ -46,8 +46,15 @@ public class TestRenderedObject : RenderedObject
    public TestRenderedObject()
    {
       AddRect(76, 332);
-      AddRect(50, 100);
-      AddRect(10, 50);
+      // AddRect(50, 100);
+      // AddRect(10, 50);
+      _complexPoints.Add(new List<PointF>
+      {
+         new(0, -66),
+         new(33, 33),
+         new(-33, 33),
+         // new(0, -10),
+      });
    }
 
    private void AddRect(float width, float height)
