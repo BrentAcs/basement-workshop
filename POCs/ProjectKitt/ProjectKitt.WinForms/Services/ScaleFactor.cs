@@ -37,7 +37,7 @@ public class ScaleFactoValueAttribute : Attribute
 
 public static class EnumExtensions
 {
-   public static float GetScaleFactoValue(this ScaleFactor enumValue)
+   public static float GetScaleFactorValue(this ScaleFactor enumValue)
    {
       var value = enumValue.GetType()
          .GetMember(enumValue.ToString())

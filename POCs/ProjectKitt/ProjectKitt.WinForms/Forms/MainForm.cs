@@ -42,7 +42,7 @@ public partial class MainForm : Form
 
    private PointF ComputeNew(PointF starting, float heading, float distance)
    {
-      distance *= _renderer.ScaleFactor.GetScaleFactoValue();
+      distance *= _renderer.ScaleFactor.GetScaleFactorValue();
       var radians = ((double)heading).ToRadians();
       return new PointF((float)(starting.X + distance * Math.Sin(radians)),
          (float)(starting.Y + distance * Math.Cos(radians)));

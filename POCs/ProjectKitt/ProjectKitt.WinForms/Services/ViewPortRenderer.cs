@@ -48,7 +48,7 @@ public class ViewPortRenderer
 
    private IEnumerable<PointF> ComputeObjectsPoints(IEnumerable<PointF> objectPoints, PointF center)
    {
-      var scaleFactor = ScaleFactor.GetScaleFactoValue();
+      var scaleFactor = ScaleFactor.GetScaleFactorValue();
       var result = new List<PointF>();
       foreach (var point in objectPoints)
       {
