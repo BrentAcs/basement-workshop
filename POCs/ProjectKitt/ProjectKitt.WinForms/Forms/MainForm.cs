@@ -40,7 +40,7 @@ public partial class MainForm : Form
       // _renderer.Render(e.Graphics, new _1000RenderedObject(), _location, _heading);
    }
 
-   private PointF ComputeNew(PointF starting, float heading, float distance)
+   private PointF ComputeNew(PointF starting, float heading, double distance)
    {
       distance *= _renderer.ScaleFactor.GetScaleFactorValue();
       var radians = ((double)heading).ToRadians();

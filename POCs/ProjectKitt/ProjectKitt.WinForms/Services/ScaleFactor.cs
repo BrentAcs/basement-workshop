@@ -19,9 +19,15 @@ public enum ScaleFactor
 
    [ScaleFactoValue(0.01f)]
    OneToOneHundred,     // 111.84 x 68.35 miles
-   
-   [ScaleFactoValue(0.001f)]
-   OneToOneThousand,    // 1,1118.46 x 683.50 miles
+
+   [ScaleFactoValue(0.0025f)]
+   OneToTwoHundredFifty,
+
+   [ScaleFactoValue(0.005f)]
+   OneToFiveHundred,
+
+   //[ScaleFactoValue(0.001f)]
+   //OneToOneThousand,    // 1,1118.46 x 683.50 miles
 }
 
 [AttributeUsage(AttributeTargets.Field)]

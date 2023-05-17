@@ -30,6 +30,9 @@
       {
          var mapGrid1 = new Models.MapGrid();
          var resources = new System.ComponentModel.ComponentResourceManager(typeof(TestForm));
+         var mapGridViewOptions1 = new Controls.MapGridViewOptions();
+         var gridOptions1 = new Controls.MapGridViewOptions.GridOptions();
+         var fontOptions1 = new Controls.MapGridViewOptions.FontOptions();
          theMapGridView = new Controls.MapGridView();
          SuspendLayout();
          // 
@@ -46,6 +49,18 @@
          theMapGridView.ScaleFactor = Services.ScaleFactor.OneToOne;
          theMapGridView.Size = new Size(776, 426);
          theMapGridView.TabIndex = 0;
+         gridOptions1.Color = Color.DarkGray;
+         fontOptions1.Color = Color.LimeGreen;
+         fontOptions1.Name = "Arial";
+         fontOptions1.Size = 9;
+         fontOptions1.Style = FontStyle.Regular;
+         gridOptions1.Font = fontOptions1;
+         gridOptions1.HeavyStep = 500;
+         gridOptions1.Step = 50;
+         gridOptions1.Visible = true;
+         gridOptions1.Width = 1;
+         mapGridViewOptions1.Grid = gridOptions1;
+         theMapGridView.ViewOptions = mapGridViewOptions1;
          theMapGridView.ViewPortOrigin = (PointF)resources.GetObject("theMapGridView.ViewPortOrigin");
          // 
          // TestForm
