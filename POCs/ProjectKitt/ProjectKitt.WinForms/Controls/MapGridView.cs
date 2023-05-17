@@ -20,9 +20,9 @@ public partial class MapGridView : UserControl
       KeyUp += ThePanel_KeyUp;
    }
 
-   private void ThePanel_KeyDown(object? sender, KeyEventArgs e) => _controlKeyDown = e.Control;
+   private void ThePanel_KeyDown(object? sender, KeyEventArgs e) { _controlKeyDown = e.Control; _altKeyDown = e.Alt; }
 
-   private void ThePanel_KeyUp(object? sender, KeyEventArgs e) => _controlKeyDown = false;
+   private void ThePanel_KeyUp(object? sender, KeyEventArgs e) { _controlKeyDown = false; _altKeyDown = false; }
 
    protected override void OnLoad(EventArgs e)
    {
@@ -47,19 +47,13 @@ public partial class MapGridView : UserControl
 
    private void ResetView()
    {
-      // thePanel.Size = new Size(
-      //    (int)(TacticalGrid.Size.Width * ScaleFactor.GetScaleFactorValue()),
-      //    (int)(TacticalGrid.Size.Size * ScaleFactor.GetScaleFactorValue()));
    }
 
    private void TacticalGridView_Load(object sender, EventArgs e) => ResetView();
 
    private void thePanel_Paint(object sender, PaintEventArgs e) => RenderGrid(e.Graphics);
 
-   private void MapGridView_SizeChanged(object sender, EventArgs e)
-   {
-      CheckViewPortOrigin();
-   }
+   private void MapGridView_SizeChanged(object sender, EventArgs e) => CheckViewPortOrigin();
 
    private void ThePanel_MouseWheel(object? sender, MouseEventArgs e)
    {
@@ -82,6 +76,31 @@ public partial class MapGridView : UserControl
       {
          OffsetOrigin(100, 0);
       }
+
+      if (e.Delta.IsNegative() && _altKeyDown)
+      {
+         var values = Enum.GetValues<ScaleFactor>().ToList();
+         var index = values.IndexOf(ScaleFactor);
+         if (index > 0)
+         {
+            ScaleFactor = values[index - 1];
+         }
+
+         OffsetOrigin(0, 0);
+      }
+
+      if (e.Delta.IsPositive() && _altKeyDown)
+      {
+         var values = Enum.GetValues<ScaleFactor>().ToList();
+         var index = values.IndexOf(ScaleFactor);
+         if (index < values.Count-1)
+         {
+            ScaleFactor = values[index + 1];
+         }
+
+         OffsetOrigin(0, 0);
+      }
+
    }
 
    private float ScaleMe(float v) => v * ScaleFactorValue;
@@ -116,7 +135,6 @@ public partial class MapGridView : UserControl
 
       ViewPortOrigin = new PointF(newX, newY);
    }
-
 
    private void RenderGrid(Graphics g)
    {
