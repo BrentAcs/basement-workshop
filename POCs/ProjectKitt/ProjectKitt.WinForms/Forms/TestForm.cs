@@ -17,4 +17,9 @@ public partial class TestForm : Form
 
       theMapGridView.ViewOptions = new MapGridViewOptions();
    }
+
+   private void theMapGridView_ScaleFactorChanged(object sender, ScaleFactorChangedArgs e)
+   {
+      label1.Text = $"{e.ScaleFactor}";
+   }
 }
