@@ -5,37 +5,40 @@ namespace ProjectKitt.WinForms.Services;
 public enum ScaleFactor
 {
    // given 1px, 1800 x 1200
-   [ScaleFactoValue(1.0f)]
+   [ScaleFactorValue(1.0f)]
    OneToOne = 1,        // 1.11 x .68 miles
    
-   [ScaleFactoValue(0.5f)]
+   [ScaleFactorValue(0.5f)]
    OneToFive,
    
-   [ScaleFactoValue(0.1f)]
+   [ScaleFactorValue(0.1f)]
    OneToTen,            // 11.18 x 6.83 miles
-   
-   [ScaleFactoValue(0.05f)]
+
+   [ScaleFactorValue(0.025f)]
+   OneToTwentyFive,
+
+   [ScaleFactorValue(0.05f)]
    OneToFifty,            // 11.18 x 6.83 miles
 
-   [ScaleFactoValue(0.01f)]
+   [ScaleFactorValue(0.01f)]
    OneToOneHundred,     // 111.84 x 68.35 miles
 
-   [ScaleFactoValue(0.0025f)]
+   [ScaleFactorValue(0.0025f)]
    OneToTwoHundredFifty,
 
-   [ScaleFactoValue(0.005f)]
+   [ScaleFactorValue(0.005f)]
    OneToFiveHundred,
 
-   //[ScaleFactoValue(0.001f)]
-   //OneToOneThousand,    // 1,1118.46 x 683.50 miles
+   [ScaleFactorValue(0.001f)]
+   OneToOneThousand,    // 1,1118.46 x 683.50 miles
 }
 
 [AttributeUsage(AttributeTargets.Field)]
-public class ScaleFactoValueAttribute : Attribute
+public class ScaleFactorValueAttribute : Attribute
 {
    public float Value { get; private set; }
 
-   public ScaleFactoValueAttribute(float value)
+   public ScaleFactorValueAttribute(float value)
    {
       Value = value;
    }
@@ -48,7 +51,7 @@ public static class EnumExtensions
       var value = enumValue.GetType()
          .GetMember(enumValue.ToString())
          .First()
-         .GetCustomAttribute<ScaleFactoValueAttribute>()?
+         .GetCustomAttribute<ScaleFactorValueAttribute>()?
          .Value;
 
       return value ?? 1.0f;

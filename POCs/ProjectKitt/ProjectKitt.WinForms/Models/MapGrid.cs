@@ -4,11 +4,10 @@
 
 public class MapGrid
 {
-   public List<IMapGridObject> Objects { get; set; } = new();
    public SizeF Size { get; set; } = new(735000, 1000000);
+
+   public List<IMapGridObject> Objects { get; set; } = new();
+
+   public IEnumerable<IMapGridStaticObject> StaticObjects => Objects.Cast<IMapGridStaticObject>();
 }
 
-public interface IMapGridObject
-{
-   PointF Location { get; }
-}

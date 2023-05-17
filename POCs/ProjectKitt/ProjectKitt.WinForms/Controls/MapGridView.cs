@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using Bass.Shared.Extensions;
-using Newtonsoft.Json;
+using Microsoft.Extensions.DependencyInjection;
 using ProjectKitt.WinForms.Extensions;
 using ProjectKitt.WinForms.Models;
 using ProjectKitt.WinForms.Services;
@@ -58,12 +58,14 @@ public partial class MapGridView : UserControl
 
    private void MapGridView_SizeChanged(object sender, EventArgs e) => CheckViewPortOrigin();
 
-   private void ThePanel_MouseWheel(object? sender, MouseEventArgs e) => OnMouseWheel(e);
+   private void ThePanel_MouseWheel(object? sender, MouseEventArgs e) => HandleMouseWheel(e);
 
    // --- Methods
 
    private void ResetView()
    {
+      ScaleFactor = ScaleFactor.OneToOne;
+      MapGrid = Globals.MapGridRepo.Get();
    }
 
    private float ScaleMe(float v) => v * ScaleFactorValue;
@@ -80,7 +82,7 @@ public partial class MapGridView : UserControl
       thePanel.Update();
    }
 
-   private void OnMouseWheel(MouseEventArgs e)
+   private void HandleMouseWheel(MouseEventArgs e)
    {
       if (_shiftKeyDown)
       {
@@ -206,14 +208,4 @@ public partial class MapGridView : UserControl
    }
 
    protected virtual void OnScaleFactorChanged(ScaleFactorChangedArgs e) => ScaleFactorChanged?.Invoke(this, e);
-}
-
-public class ScaleFactorChangedArgs : EventArgs
-{
-   public ScaleFactor ScaleFactor { get; }
-
-   public ScaleFactorChangedArgs(ScaleFactor scaleFactor)
-   {
-      ScaleFactor = scaleFactor;
-   }
 }
