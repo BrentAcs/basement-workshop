@@ -156,6 +156,10 @@ public partial class MapGridView : UserControl
          else
          {
             g.DrawLine(heavyPen, x - ViewPortOrigin.X, 0, x - ViewPortOrigin.X, ViewSize.Height);
+
+            if(Math.Abs(x - ViewPortOrigin.X) < 1e-10)
+               continue;
+
             var value = $"{MetersToString(InverseScale(x))}";
             var valueSize = g.MeasureString(value, font);
             g.DrawString(value, font, textBrush, x - ViewPortOrigin.X - (valueSize.Width / 2), 0);
@@ -172,6 +176,10 @@ public partial class MapGridView : UserControl
          else
          {
             g.DrawLine(heavyPen, 0, y - ViewPortOrigin.Y, ViewSize.Width, y - ViewPortOrigin.Y);
+
+            if (Math.Abs(y - ViewPortOrigin.Y) < 1e-10)
+               continue;
+
             var value = $"{MetersToString(InverseScale(y))}";
             var valueSize = g.MeasureString(value, font);
             g.DrawString(value, font, textBrush, 0, y - ViewPortOrigin.Y - (valueSize.Width / 2), format);
