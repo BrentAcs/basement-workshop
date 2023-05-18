@@ -13,14 +13,14 @@ public partial class MainForm : Form
    public MainForm()
    {
       InitializeComponent();
-      _renderer = new ViewPortRenderer(ClientRectangle);
-      // _renderer.ScaleFactor = ScaleFactor.OneToOneHundred;
-
-      foreach (var scaleFactor in Enum.GetValues<ScaleFactor>())
-      {
-         scaleListBox.Items.Add(scaleFactor);
-      }
-      scaleListBox.SelectedIndex = 0;
+      // _renderer = new ViewPortRenderer(ClientRectangle);
+      // // _renderer.ScaleFactor = ScaleFactor.OneToOneHundred;
+      //
+      // foreach (var scaleFactor in Enum.GetValues<ScaleFactor>())
+      // {
+      //    scaleListBox.Items.Add(scaleFactor);
+      // }
+      // scaleListBox.SelectedIndex = 0;
    }
 
    private void MainForm_SizeChanged(object sender, EventArgs e) => Invalidate();

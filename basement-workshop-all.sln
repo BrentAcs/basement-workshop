@@ -19,6 +19,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectKitt", "ProjectKitt"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectKitt.WinForms", "POCs\ProjectKitt\ProjectKitt.WinForms\ProjectKitt.WinForms.csproj", "{771C2319-2595-4320-9965-508945AAFE95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectKitt.Core", "POCs\ProjectKitt\ProjectKitt.Core\ProjectKitt.Core.csproj", "{612295AE-C33D-4AE4-AEBB-332CB51342C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectKitt.Core.Tests", "POCs\ProjectKitt\ProjectKitt.Core.Tests\ProjectKitt.Core.Tests.csproj", "{FC16D448-EEB4-4F6B-86DE-8BC89BB345C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +41,14 @@ Global
 		{771C2319-2595-4320-9965-508945AAFE95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{771C2319-2595-4320-9965-508945AAFE95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{771C2319-2595-4320-9965-508945AAFE95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{612295AE-C33D-4AE4-AEBB-332CB51342C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{612295AE-C33D-4AE4-AEBB-332CB51342C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{612295AE-C33D-4AE4-AEBB-332CB51342C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{612295AE-C33D-4AE4-AEBB-332CB51342C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC16D448-EEB4-4F6B-86DE-8BC89BB345C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC16D448-EEB4-4F6B-86DE-8BC89BB345C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC16D448-EEB4-4F6B-86DE-8BC89BB345C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC16D448-EEB4-4F6B-86DE-8BC89BB345C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,5 +58,7 @@ Global
 		{C10B3CF7-3817-495F-8040-91B7D6B43933} = {B344F235-3BC0-4FA6-BB70-69FC3947F64F}
 		{FF2F849A-8DEC-4ED2-B63F-4D699BD1A5D1} = {4B9A46F4-B96B-4422-BCC7-11C6E634225A}
 		{771C2319-2595-4320-9965-508945AAFE95} = {FF2F849A-8DEC-4ED2-B63F-4D699BD1A5D1}
+		{612295AE-C33D-4AE4-AEBB-332CB51342C2} = {FF2F849A-8DEC-4ED2-B63F-4D699BD1A5D1}
+		{FC16D448-EEB4-4F6B-86DE-8BC89BB345C5} = {FF2F849A-8DEC-4ED2-B63F-4D699BD1A5D1}
 	EndGlobalSection
 EndGlobal

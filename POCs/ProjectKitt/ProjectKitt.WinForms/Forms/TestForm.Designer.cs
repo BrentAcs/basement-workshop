@@ -28,7 +28,6 @@
       /// </summary>
       private void InitializeComponent()
       {
-         var mapGrid2 = new Models.MapGrid();
          var resources = new System.ComponentModel.ComponentResourceManager(typeof(TestForm));
          var mapGridViewOptions2 = new Controls.MapGridViewOptions();
          var gridOptions2 = new Controls.MapGridViewOptions.GridOptions();
@@ -43,9 +42,6 @@
          theMapGridView.AutoScroll = true;
          theMapGridView.AutoSize = true;
          theMapGridView.Location = new Point(12, 70);
-         mapGrid2.Objects = (List<Models.IMapGridObject>)resources.GetObject("mapGrid2.Objects");
-         mapGrid2.Size = new SizeF(735000F, 1000000F);
-         theMapGridView.MapGrid = mapGrid2;
          theMapGridView.Name = "theMapGridView";
          theMapGridView.ScaleFactor = Services.ScaleFactor.OneToOne;
          theMapGridView.Size = new Size(917, 603);

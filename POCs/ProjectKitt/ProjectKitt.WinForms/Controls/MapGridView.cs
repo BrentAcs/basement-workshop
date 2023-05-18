@@ -1,8 +1,7 @@
 ﻿using System.Reflection;
 using Bass.Shared.Extensions;
-using Microsoft.Extensions.DependencyInjection;
+using ProjectKitt.Core.Models;
 using ProjectKitt.WinForms.Extensions;
-using ProjectKitt.WinForms.Models;
 using ProjectKitt.WinForms.Services;
 
 namespace ProjectKitt.WinForms.Controls;

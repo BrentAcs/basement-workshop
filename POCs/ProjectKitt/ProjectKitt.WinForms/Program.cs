@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProjectKitt.Core.Services;
 using ProjectKitt.WinForms.Forms;
 using ProjectKitt.WinForms.Services;
 

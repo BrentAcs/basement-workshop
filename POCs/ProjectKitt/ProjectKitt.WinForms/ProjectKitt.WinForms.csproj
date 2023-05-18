@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Bass.Shared\Bass.Shared.csproj" />
+    <ProjectReference Include="..\ProjectKitt.Core\ProjectKitt.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
