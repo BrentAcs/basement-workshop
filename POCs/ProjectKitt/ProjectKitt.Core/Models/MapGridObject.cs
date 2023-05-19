@@ -38,7 +38,7 @@ public class MapGridStaticObject : MapGridObject, IMapGridStaticObject
 
 public class MapGridUnitObject : MapGridObject, IMapGridUnitObject
 {
-   public UnitType UnitType { get; } = UnitType.Armor;
-   public float Facing { get; }
+   public UnitType UnitType { get; set;  } = UnitType.Armor;
+   public float Facing { get; set; }
 
 }
