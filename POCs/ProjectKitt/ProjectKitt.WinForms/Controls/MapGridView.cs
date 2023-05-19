@@ -1,11 +1,10 @@
-﻿using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Reflection;
+﻿using System.Reflection;
 using Bass.Shared.Extensions;
 using ProjectKitt.Core.Extensions;
 using ProjectKitt.Core.Models;
 using ProjectKitt.WinForms.Extensions;
 using ProjectKitt.WinForms.Services;
+using ProjectKitt.WinForms.Services.Rendering;
 
 namespace ProjectKitt.WinForms.Controls;
 
@@ -39,7 +38,7 @@ public partial class MapGridView : UserControl
    public MapGrid MapGrid { get; set; } = new();
    public MapGridViewOptions ViewOptions { get; set; } = new();
    public PointF ViewPortOrigin { get; set; } = new(0, 0);
-   public ScaleFactor ScaleFactor { get; set; } = ScaleFactor.OneToOne;
+   public ScaleFactor ScaleFactor { get; set; } = ScaleFactor._1To1;
 
    // --- Events
 
@@ -71,7 +70,7 @@ public partial class MapGridView : UserControl
 
    private void ResetView()
    {
-      ScaleFactor = ScaleFactor.OneToOne;
+      ScaleFactor = ScaleFactor._1To1;
       MapGrid = Globals.MapGridRepo.Get();
    }
 
@@ -178,6 +177,9 @@ public partial class MapGridView : UserControl
 
       for (float x = ViewPortOrigin.X; x < ViewSize.Width + ViewPortOrigin.X; x += ViewOptions.Grid.Step)
       {
+         if (x > MapGrid.Size.Width.ScaleBy(ScaleFactorValue))
+            break;
+
          if (x % ViewOptions.Grid.HeavyStep != 0)
          {
             g.DrawLine(pen, x - ViewPortOrigin.X, 0, x - ViewPortOrigin.X, ViewSize.Height);
@@ -198,6 +200,9 @@ public partial class MapGridView : UserControl
 
       for (float y = ViewPortOrigin.Y; y < ViewSize.Height + ViewPortOrigin.Y; y += ViewOptions.Grid.Step)
       {
+         if (y > MapGrid.Size.Height.ScaleBy(ScaleFactorValue))
+            break;
+
          if (y % ViewOptions.Grid.HeavyStep != 0)
          {
             g.DrawLine(pen, 0, y - ViewPortOrigin.Y, ViewSize.Width, y - ViewPortOrigin.Y);
@@ -221,221 +226,11 @@ public partial class MapGridView : UserControl
    {
       foreach (var mapGridObject in MapGrid.Objects)
       {
-         var renderer = _rendererFactory.GetRenderer(mapGridObject);
-         if (renderer is null)
-            continue;
-
-         renderer.Initialize(mapGridObject, ScaleFactor).Render(g, ViewPortOrigin);
+         _rendererFactory.GetRenderer(mapGridObject)
+            ?.Initialize(mapGridObject, ScaleFactor)
+            .Render(g, ViewPortOrigin);
       }
    }
 }
 
 
-public interface IMapGridObjectRenderer
-{
-   bool CanRender(IMapGridObject mapGridObject);
-   IMapGridObjectRenderer Initialize(IMapGridObject mapGridObject, ScaleFactor scaleFactor);
-   void Render(Graphics g, PointF viewPortOrigin);
-}
-
-public interface IMapGridObjectRendererFactory
-{
-   IMapGridObjectRenderer? GetRenderer(IMapGridObject? mapGridObject);
-}
-
-public class MapGridObjectRendererFactory : IMapGridObjectRendererFactory
-{
-   private readonly IEnumerable<IMapGridObjectRenderer> _renders = new List<IMapGridObjectRenderer>
-   {
-      new MapGridStaticObjectRenderer(),
-      new MapGridUnitObjectRenderer()
-   };
-
-   public IMapGridObjectRenderer? GetRenderer(IMapGridObject? mapGridObject)
-   {
-      if (mapGridObject == null)
-         return null;
-
-      return _renders.FirstOrDefault(renderer => renderer.CanRender(mapGridObject));
-   }
-}
-
-
-public abstract class MapGridObjectRenderer : IMapGridObjectRenderer
-{
-   protected IMapGridObject? MapGridObject { get; private set; }
-   protected ScaleFactor ScaleFactor { get; private set; }
-   protected float ScaleFactorValue { get; private set; }
-
-   public abstract bool CanRender(IMapGridObject mapGridObject);
-
-   public IMapGridObjectRenderer Initialize(IMapGridObject mapGridObject, ScaleFactor scaleFactor)
-   {
-      MapGridObject = mapGridObject;
-      ScaleFactor = scaleFactor;
-      ScaleFactorValue = ScaleFactor.GetScaleFactorValue();
-      return this;
-   }
-   public abstract void Render(Graphics g, PointF viewPortOrigin);
-
-   protected PointF ScaleLocation(PointF viewPortOrigin) => new(
-      MapGridObject!.Location.X.ScaleBy(ScaleFactorValue) - viewPortOrigin.X,
-      MapGridObject.Location.Y.ScaleBy(ScaleFactorValue) - viewPortOrigin.Y);
-
-   protected IEnumerable<PointF> ComputeObjectsPoints(IEnumerable<PointF> objectPoints, PointF center)
-   {
-      var scaleFactor = ScaleFactor.GetScaleFactorValue();
-      var result = new List<PointF>();
-      foreach (var point in objectPoints)
-      {
-         result.Add(new PointF(center.X + point.X * scaleFactor, center.Y + point.Y * scaleFactor));
-      }
-
-      return result;
-   }
-}
-
-
-public class MapGridStaticObjectRenderer : MapGridObjectRenderer, IMapGridObjectRenderer
-{
-   public override bool CanRender(IMapGridObject mapGridObject) => mapGridObject is IMapGridStaticObject;
-
-   public override void Render(Graphics g, PointF viewPortOrigin)
-   {
-      if (MapGridObject is not IMapGridStaticObject staticObject)
-         throw new InvalidOperationException();
-
-      using var pen = new Pen(staticObject.PerimeterColor);
-      using var brush = new SolidBrush(staticObject.PerimeterColor);
-
-      var location = ScaleLocation(viewPortOrigin);
-
-      var points = ComputeObjectsPoints(staticObject.PerimeterPoints, location).ToList();
-      //var rotated = points.ToRotatePolygon(display, heading);
-
-      points.ClosePolygon();
-      g.DrawPolygon(pen, points.ToArray());
-      g.FillPolygon(brush, points.ToArray());
-   }
-}
-
-public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRenderer
-{
-   public override bool CanRender(IMapGridObject mapGridObject) => mapGridObject is IMapGridUnitObject;
-
-   private static readonly RectangleF _overallRect = new(PointF.Empty, new SizeF(56, 56));
-   private static readonly RectangleF _symbolRect = new(PointF.Empty, new SizeF(45, 30));
-
-   private IMapGridUnitObject UnitObject
-   {
-      get
-      {
-         if (MapGridObject is not IMapGridUnitObject unitObject)
-            throw new InvalidOperationException();
-         return unitObject;
-      }
-   }
-
-   public override void Render(Graphics g, PointF viewPortOrigin)
-   {
-      using var pen = new Pen(Color.White, 2);
-      var location = ScaleLocation(viewPortOrigin);
-      //var overallRect = _overallRect.CenterOn(location);
-      //var overallPoints = _overallRect.ToPointFs();
-      var symbolRect = _symbolRect.CenterOn(location);
-
-      //var symbolPoints = symbolRect.ToPointFs();
-      //var rotated = symbolPoints.ToRotatePolygon(location, UnitObject.Facing);
-      //symbolPoints.ClosePolygon();
-
-      g.DrawRectangle(pen, symbolRect);
-      //g.DrawPolygon(pen, symbolPoints.ToArray());
-
-      //g.DrawEllipse(pen, overallRect);
-
-      DrawUnitSymbol(g, pen, symbolRect);
-      DrawFacingIndicator(g, location, Color.AliceBlue);
-   }
-
-   private void DrawUnitSymbol(Graphics g, Pen pen, RectangleF symbolRect)
-   {
-      switch (UnitObject.UnitType)
-      {
-         case UnitType.Armor:
-            DrawArmorUnitSymbol(g, pen, symbolRect);
-            break;
-         case UnitType.Infantry:
-            DrawInfantryUnitSymbol(g, pen, symbolRect);
-            break;
-         case UnitType.MechInfantry:
-            DrawArmorUnitSymbol(g, pen, symbolRect);
-            DrawInfantryUnitSymbol(g, pen, symbolRect);
-            break;
-            //default:
-            //   throw new ArgumentOutOfRangeException();
-      }
-   }
-
-   private void DrawArmorUnitSymbol(Graphics g, Pen pen, RectangleF symbolRect)
-   {
-      var rect = symbolRect.Deflate(10, 15);
-      g.DrawEllipse(pen, rect);
-   }
-
-   private void DrawInfantryUnitSymbol(Graphics g, Pen pen, RectangleF symbolRect)
-   {
-      g.DrawLine(pen, 
-         symbolRect.Location, 
-         new PointF(symbolRect.Location.X + symbolRect.Width, symbolRect.Location.Y + symbolRect.Height));
-      g.DrawLine(pen,
-         symbolRect.Location with { Y = symbolRect.Location.Y + symbolRect.Height },
-         symbolRect.Location with { X = symbolRect.Location.X + symbolRect.Width });
-   }
-
-   private void DrawFacingIndicator(Graphics g, PointF location, Color color)
-   {
-      if (MapGridObject is not IMapGridUnitObject unitObject)
-         throw new InvalidOperationException();
-
-      const float facingMarkerLength = 35;
-      const float arrowHeadAngle = 135;
-      const float arrowHeadLength = 7;
-
-      using var facingPen = new Pen(Color.LimeGreen, 2);
-
-      var radians = ((double)unitObject.Facing).ToRadians();
-      var rayEnd = new PointF(
-         (float)(location.X + facingMarkerLength * Math.Sin(radians)),
-         (float)(location.Y + facingMarkerLength * -Math.Cos(radians)));
-      g.DrawLine(facingPen, location, rayEnd);
-
-      var arrowHeadLeft = new PointF(
-         (float)(rayEnd.X + arrowHeadLength * Math.Sin(((double)unitObject.Facing - arrowHeadAngle).ToRadians())),
-         (float)(rayEnd.Y + arrowHeadLength * -Math.Cos(((double)unitObject.Facing - arrowHeadAngle).ToRadians()))
-      );
-      g.DrawLine(facingPen, rayEnd, arrowHeadLeft);
-      var arrowHeadRight = new PointF(
-         (float)(rayEnd.X + arrowHeadLength * Math.Sin(((double)unitObject.Facing + arrowHeadAngle).ToRadians())),
-         (float)(rayEnd.Y + arrowHeadLength * -Math.Cos(((double)unitObject.Facing + arrowHeadAngle).ToRadians()))
-      );
-      g.DrawLine(facingPen, rayEnd, arrowHeadRight);
-
-   }
-}
-
-public static class RectangleFExtensions
-{
-   public static RectangleF CenterOn(this RectangleF rect, PointF point) =>
-      rect with { X = point.X - rect.X - rect.Width / 2, Y = point.Y - rect.Y - rect.Height / 2 };
-
-   public static RectangleF Deflate(this RectangleF rect, float x, float y) => new(rect.X + x/2, rect.Y + y/2, rect.Width-x, rect.Height-y);
-
-   public static IList<PointF> ToPointFs(this RectangleF rect) =>
-         new List<PointF>
-         {
-         new(rect.X, rect.Y),
-         new(rect.X+rect.Width, rect.Y),
-         new(rect.X+rect.Width, rect.Y+rect.Height),
-         new(rect.X, rect.Y+rect.Height),
-         };
-}

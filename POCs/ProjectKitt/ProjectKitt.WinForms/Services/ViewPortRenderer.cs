@@ -7,7 +7,7 @@ public class ViewPortRenderer
       ViewRect = viewRect;
    }
 
-   public ScaleFactor ScaleFactor { get; set; } = ScaleFactor.OneToOne;
+   public ScaleFactor ScaleFactor { get; set; } = ScaleFactor._1To1;
    public ViewPortRendererOptions Options { get; set; } = new();
    public RectangleF ViewRect { get; set; }
    public PointF ViewCenter => GetViewCenter();

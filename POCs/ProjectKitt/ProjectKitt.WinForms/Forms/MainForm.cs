@@ -14,7 +14,7 @@ public partial class MainForm : Form
    {
       InitializeComponent();
       // _renderer = new ViewPortRenderer(ClientRectangle);
-      // // _renderer.ScaleFactor = ScaleFactor.OneToOneHundred;
+      // // _renderer.ScaleFactor = ScaleFactor._1To100;
       //
       // foreach (var scaleFactor in Enum.GetValues<ScaleFactor>())
       // {

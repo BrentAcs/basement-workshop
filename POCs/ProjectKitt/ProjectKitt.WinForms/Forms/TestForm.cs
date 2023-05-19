@@ -9,17 +9,20 @@ public partial class TestForm : Form
    {
       InitializeComponent();
 
-      theMapGridView.ScaleFactor = ScaleFactor.OneToOne;
-      //theMapGridView.ScaleFactor = ScaleFactor.OneToTen;
-      //theMapGridView.ScaleFactor = ScaleFactor.OneToOneHundred;
+      theMapGridView.ScaleFactor = ScaleFactor._1To1;
+      //theMapGridView.ScaleFactor = ScaleFactor._1To10;
+      //theMapGridView.ScaleFactor = ScaleFactor._1To100;
       //theMapGridView.ScaleFactor = ScaleFactor.OneToTwoHundredFifty;
       //theMapGridView.ScaleFactor = ScaleFactor.OneToFiveHundred;
 
       theMapGridView.ViewOptions = new MapGridViewOptions();
+      UpdateDisplayRatio();
    }
 
    private void theMapGridView_ScaleFactorChanged(object sender, ScaleFactorChangedArgs e)
    {
-      label1.Text = $"{e.ScaleFactor}";
+      UpdateDisplayRatio();
    }
+
+   private void UpdateDisplayRatio() => label1.Text = theMapGridView.ScaleFactor.GetScaleFactorDisplayRatio();
 }

@@ -43,7 +43,7 @@
          theMapGridView.AutoSize = true;
          theMapGridView.Location = new Point(12, 70);
          theMapGridView.Name = "theMapGridView";
-         theMapGridView.ScaleFactor = Services.ScaleFactor.OneToOne;
+         theMapGridView.ScaleFactor = Services.ScaleFactor._1To1;
          theMapGridView.Size = new Size(917, 603);
          theMapGridView.TabIndex = 0;
          gridOptions2.Color = Color.DarkGray;
