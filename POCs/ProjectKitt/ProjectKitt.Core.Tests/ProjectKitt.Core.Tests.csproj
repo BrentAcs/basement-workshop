@@ -27,4 +27,8 @@
       <ProjectReference Include="..\ProjectKitt.Core\ProjectKitt.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="_Rnd\" />
+    </ItemGroup>
+
 </Project>
