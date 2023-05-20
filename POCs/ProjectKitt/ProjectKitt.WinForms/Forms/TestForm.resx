@@ -117,23 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="mapGrid2.Objects" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAEtQcm9qZWN0S2l0dC5XaW5Gb3JtcywgVmVyc2lvbj0xLjAuMC4w
-        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwEAQAAAIsBU3lzdGVtLkNvbGxlY3Rp
-        b25zLkdlbmVyaWMuTGlzdGAxW1tQcm9qZWN0S2l0dC5XaW5Gb3Jtcy5Nb2RlbHMuSU1hcEdyaWRPYmpl
-        Y3QsIFByb2plY3RLaXR0LldpbkZvcm1zLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51
-        bGxdXQMAAAAGX2l0ZW1zBV9zaXplCF92ZXJzaW9uBAAALFByb2plY3RLaXR0LldpbkZvcm1zLk1vZGVs
-        cy5JTWFwR3JpZE9iamVjdFtdAgAAAAgICQMAAAAAAAAAAAAAAAwEAAAAOlByb2plY3RLaXR0LldpbkZv
-        cm1zLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwHAwAAAAABAAAAAAAAAAQqUHJv
-        amVjdEtpdHQuV2luRm9ybXMuTW9kZWxzLklNYXBHcmlkT2JqZWN0BAAAAAs=
-</value>
-  </data>
-  <data name="theMapGridView.ViewPortOrigin" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
-        dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
-        d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAAAAAAAAAL
-</value>
-  </data>
 </root>

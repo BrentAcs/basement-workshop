@@ -28,10 +28,6 @@
       /// </summary>
       private void InitializeComponent()
       {
-         var resources = new System.ComponentModel.ComponentResourceManager(typeof(TestForm));
-         var mapGridViewOptions2 = new Controls.MapGridViewOptions();
-         var gridOptions2 = new Controls.MapGridViewOptions.GridOptions();
-         var fontOptions2 = new Controls.MapGridViewOptions.FontOptions();
          theMapGridView = new Controls.MapGridView();
          label1 = new Label();
          SuspendLayout();
@@ -43,22 +39,8 @@
          theMapGridView.AutoSize = true;
          theMapGridView.Location = new Point(12, 70);
          theMapGridView.Name = "theMapGridView";
-         theMapGridView.ScaleFactor = Services.ScaleFactor._1To1;
          theMapGridView.Size = new Size(917, 603);
          theMapGridView.TabIndex = 0;
-         gridOptions2.Color = Color.DarkGray;
-         fontOptions2.Color = Color.LimeGreen;
-         fontOptions2.Name = "Arial";
-         fontOptions2.Size = 12;
-         fontOptions2.Style = FontStyle.Regular;
-         gridOptions2.Font = fontOptions2;
-         gridOptions2.HeavyStep = 250;
-         gridOptions2.Step = 50;
-         gridOptions2.Visible = true;
-         gridOptions2.Width = 1;
-         mapGridViewOptions2.Grid = gridOptions2;
-         theMapGridView.ViewOptions = mapGridViewOptions2;
-         theMapGridView.ViewPortOrigin = (PointF)resources.GetObject("theMapGridView.ViewPortOrigin");
          theMapGridView.ScaleFactorChanged += theMapGridView_ScaleFactorChanged;
          // 
          // label1
@@ -80,6 +62,8 @@
          KeyPreview = true;
          Name = "TestForm";
          Text = "TestForm";
+         FormClosed += TestForm_FormClosed;
+         Load += TestForm_Load;
          ResumeLayout(false);
          PerformLayout();
       }

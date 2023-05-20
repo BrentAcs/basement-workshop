@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProjectKitt.Core.Game;
 using ProjectKitt.Core.Services;
 using ProjectKitt.WinForms.Forms;
 using ProjectKitt.WinForms.Services;
@@ -31,6 +32,8 @@ internal static class Program
       var theForm = services.GetRequiredService<TestForm>();
 
       Application.Run(theForm);
+
+      UserSettings.Default.Save();
    }
 
    private static void ConfigureServices(IConfiguration configuration, IServiceCollection services)
@@ -38,7 +41,10 @@ internal static class Program
       services
          .AddSingleton<MainForm>()
          .AddSingleton<TestForm>()
+         
+         .AddSingleton<IFactionCollection,FactionCollection>()
          .AddSingleton<IMapGridRepo, MapGridRepo>()
+         .AddSingleton<ITheGame, TheGame>()
          ;
    }
 }
@@ -46,6 +52,7 @@ internal static class Program
 public static class Globals
 {
    public static IServiceProvider ServiceProvider { get; set; }
-   
+
+   public static ITheGame TheGame => ServiceProvider.GetRequiredService<ITheGame>();
    public static IMapGridRepo MapGridRepo => ServiceProvider.GetRequiredService<IMapGridRepo>();
 }

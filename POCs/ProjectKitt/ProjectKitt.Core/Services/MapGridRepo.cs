@@ -19,7 +19,7 @@ public class MapGridRepo : IMapGridRepo
    {
       return new MapGrid
       {
-         Size = new(20000, 20000),
+         Size = new(100000, 100000),
          Objects = new List<IMapGridObject>
          {
             //new MapGridStaticObject
@@ -38,15 +38,15 @@ public class MapGridRepo : IMapGridRepo
             //},
             new MapGridUnitObject
             {
-               Location = new PointF(1000,1000),
+               Location = new PointF(7500,7500),
                UnitType = UnitType.Armor,
-               Facing = 80f
+               Facing = 90f
             },
             new MapGridUnitObject
             {
-               Location = new PointF(2000,1000),
-               UnitType = UnitType.MechInfantry,
-               Facing = 280f
+               Location = new PointF(10500,7500),
+               UnitType = UnitType.Armor,
+               Facing = 290f
             },
          }
       };

@@ -1,6 +1,8 @@
-﻿using System.Reflection;
+﻿using System.ComponentModel;
+using System.Reflection;
 using Bass.Shared.Extensions;
 using ProjectKitt.Core.Extensions;
+using ProjectKitt.Core.Game;
 using ProjectKitt.Core.Models;
 using ProjectKitt.WinForms.Extensions;
 using ProjectKitt.WinForms.Services;
@@ -10,12 +12,14 @@ namespace ProjectKitt.WinForms.Controls;
 
 public partial class MapGridView : UserControl
 {
+   private readonly ITheGame _theGame;
    private IMapGridObjectRendererFactory _rendererFactory = new MapGridObjectRendererFactory();
    private bool _controlKeyDown = false;
    private bool _shiftKeyDown = false;
 
    public MapGridView()
    {
+      _theGame = Globals.TheGame;
       InitializeComponent();
 
       thePanel.MouseWheel += ThePanel_MouseWheel;
@@ -35,9 +39,16 @@ public partial class MapGridView : UserControl
    }
 
    // --- Properties - public
-   public MapGrid MapGrid { get; set; } = new();
+   [Browsable(false)]
+   [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
    public MapGridViewOptions ViewOptions { get; set; } = new();
+
+   [Browsable(false)]
+   [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
    public PointF ViewPortOrigin { get; set; } = new(0, 0);
+
+   [Browsable(false)]
+   [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
    public ScaleFactor ScaleFactor { get; set; } = ScaleFactor._1To1;
 
    // --- Events
@@ -45,7 +56,8 @@ public partial class MapGridView : UserControl
    public event EventHandler<ScaleFactorChangedArgs> ScaleFactorChanged;
 
    // --- Properties - private
-
+   private MapGrid MapGrid => _theGame.MapGrid;
+   private IFactionCollection Factions => _theGame.Factions;
    private SizeF ViewSize => new(thePanel.ClientSize.Width, thePanel.ClientSize.Height);
    private float ScaleFactorValue => ScaleFactor.GetScaleFactorValue();
 
@@ -71,7 +83,6 @@ public partial class MapGridView : UserControl
    private void ResetView()
    {
       ScaleFactor = ScaleFactor._1To1;
-      MapGrid = Globals.MapGridRepo.Get();
    }
 
    private void OffsetOrigin(float deltaX, float deltaY)

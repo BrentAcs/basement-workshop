@@ -1,6 +1,4 @@
-﻿using Bass.Shared.Extensions;
-
-namespace ProjectKitt.WinForms.Extensions;
+﻿namespace ProjectKitt.WinForms.Extensions;
 
 public static class RectangleFExtensions
 {
@@ -17,11 +15,4 @@ public static class RectangleFExtensions
          new(rect.X+rect.Width, rect.Y+rect.Height),
          new(rect.X, rect.Y+rect.Height),
       };
-}
-
-public static class PointFExtensions
-{
-   public static PointF ComputeRayEndPoint(this PointF origin, float angle, float length) =>
-      new((float)(origin.X + length * Math.Sin(((double)angle).ToRadians())),
-         (float)(origin.Y + length * -Math.Cos(((double)angle).ToRadians())));
 }

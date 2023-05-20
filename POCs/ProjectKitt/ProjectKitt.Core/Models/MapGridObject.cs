@@ -24,6 +24,14 @@ public enum UnitType
    MechInfantry = 3,
 }
 
+public enum UnitSize
+{
+   Army = 1,
+   Corps,
+   Division,
+   Brigade,
+   Regiment,
+}
 
 public abstract class MapGridObject : IMapGridObject
 {

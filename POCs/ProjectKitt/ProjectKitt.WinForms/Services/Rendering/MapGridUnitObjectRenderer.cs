@@ -1,5 +1,6 @@
 ﻿using System.Drawing.Drawing2D;
 using Bass.Shared.Extensions;
+using ProjectKitt.Core.Extensions;
 using ProjectKitt.Core.Models;
 using ProjectKitt.WinForms.Extensions;
 
@@ -66,8 +67,8 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
          symbolRect.Location,
          new PointF(symbolRect.Location.X + symbolRect.Width, symbolRect.Location.Y + symbolRect.Height));
       g.DrawLine(pen,
-         symbolRect.Location with { Y = symbolRect.Location.Y + symbolRect.Height },
-         symbolRect.Location with { X = symbolRect.Location.X + symbolRect.Width });
+         symbolRect.Location with {Y = symbolRect.Location.Y + symbolRect.Height},
+         symbolRect.Location with {X = symbolRect.Location.X + symbolRect.Width});
    }
 
    private void DrawFacingIndicator(Graphics g, PointF location, Color color)
@@ -93,14 +94,11 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
 
    private void DrawZoneOfControl(Graphics g, PointF location, Color color)
    {
-      const float controlRadius = 50;
-      float[] angles = { 330f, 30f, 90f, 150f, 210f, 270f};
+      const float controlRadius = 2000;
+      float[] angles = {330f, 30f, 90f, 150f, 210f, 270f};
 
-      var points = new List<PointF>();
-      foreach (var angle in angles)
-      {
-         points.Add( location.ComputeRayEndPoint(angle, controlRadius));
-      }
+      var points = angles
+         .Select(angle => location.ComputeRayEndPoint(angle, controlRadius.ScaleBy(ScaleFactorValue))).ToList();
 
       points.ClosePolygon();
       var rotated = points.ToRotatePolygon(location, UnitObject.Facing);
@@ -114,6 +112,7 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
 
    public static Color ChangeColorBrightness(Color color, float correctionFactor)
    {
+      // https://stackoverflow.com/questions/801406/c-create-a-lighter-darker-color-based-on-a-system-color
       float red = color.R;
       float green = color.G;
       float blue = color.B;

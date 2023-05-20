@@ -25,4 +25,18 @@ public partial class TestForm : Form
    }
 
    private void UpdateDisplayRatio() => label1.Text = theMapGridView.ScaleFactor.GetScaleFactorDisplayRatio();
+
+   private void TestForm_Load(object sender, EventArgs e)
+   {
+      Location = UserSettings.Default.MainForm_Location;
+      Size = UserSettings.Default.MainForm_Size;
+      theMapGridView.ScaleFactor = (ScaleFactor)UserSettings.Default.MainForm_ScaleFactor;
+   }
+
+   private void TestForm_FormClosed(object sender, FormClosedEventArgs e)
+   {
+      UserSettings.Default.MainForm_Location = Location;
+      UserSettings.Default.MainForm_Size = Size;
+      UserSettings.Default.MainForm_ScaleFactor = (int)theMapGridView.ScaleFactor;
+   }
 }
