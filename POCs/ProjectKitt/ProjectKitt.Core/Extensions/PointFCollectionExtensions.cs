@@ -1,6 +1,6 @@
 ﻿using Bass.Shared.Extensions;
 
-namespace ProjectKitt.WinForms.Services;
+namespace ProjectKitt.Core.Extensions;
 
 public static class PointFCollectionExtensions
 {

@@ -10,4 +10,8 @@
       <Folder Include="_Rnd\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Common\Bass.Shared\Bass.Shared.csproj" />
+    </ItemGroup>
+
 </Project>

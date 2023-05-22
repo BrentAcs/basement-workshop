@@ -29,7 +29,7 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
       var location = ScaleLocation(viewPortOrigin);
       var symbolRect = _symbolRect.CenterOn(location);
 
-      DrawZoneOfControl(g, location, Color.Red);
+      DrawZoneOfControl(g, location, UnitObject.Owner.Color);
       g.DrawRectangle(pen, symbolRect);
 
       DrawUnitSymbol(g, pen, symbolRect);
@@ -94,20 +94,16 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
 
    private void DrawZoneOfControl(Graphics g, PointF location, Color color)
    {
-      const float controlRadius = 2000;
-      float[] angles = {330f, 30f, 90f, 150f, 210f, 270f};
+      var points = UnitObject.ZoneOfControl;
 
-      var points = angles
-         .Select(angle => location.ComputeRayEndPoint(angle, controlRadius.ScaleBy(ScaleFactorValue))).ToList();
-
-      points.ClosePolygon();
-      var rotated = points.ToRotatePolygon(location, UnitObject.Facing);
+      var scaled = points.Select(point => point.ScaleBy(ScaleFactorValue)).ToList();
+      scaled.ClosePolygon();
 
       using var pen = new Pen(color, 1);
-      g.DrawPolygon(pen, rotated.ToArray());
-
+      g.DrawPolygon(pen, scaled.ToArray());
+      
       using var brush = new SolidBrush(ChangeColorBrightness(color, .5f));
-      g.FillPolygon(brush, rotated.ToArray());
+      g.FillPolygon(brush, scaled.ToArray());
    }
 
    public static Color ChangeColorBrightness(Color color, float correctionFactor)

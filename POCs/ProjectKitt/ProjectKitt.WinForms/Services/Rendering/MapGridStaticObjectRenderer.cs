@@ -1,4 +1,5 @@
-﻿using ProjectKitt.Core.Models;
+﻿using ProjectKitt.Core.Extensions;
+using ProjectKitt.Core.Models;
 
 namespace ProjectKitt.WinForms.Services.Rendering;
 

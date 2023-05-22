@@ -1,4 +1,6 @@
-﻿namespace ProjectKitt.WinForms.Services;
+﻿using ProjectKitt.Core.Extensions;
+
+namespace ProjectKitt.WinForms.Services;
 
 public class ViewPortRenderer
 {
