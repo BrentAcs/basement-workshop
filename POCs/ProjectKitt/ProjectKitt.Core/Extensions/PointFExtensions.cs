@@ -15,9 +15,10 @@ public static class PointFExtensions
 
       return (float)Math.Sqrt((a * a) + (b * b));
    }
+   
+   public static PointF Offset(this PointF point, PointF offset) =>
+       new PointF(point.X - offset.X, point.Y - offset.Y);
 
-   
-   
    public static bool IsPointInPolygon(this PointF point, IList<PointF> polygon)
    {
       // Ref:  https://stackoverflow.com/questions/924171/geo-fencing-point-inside-outside-polygon

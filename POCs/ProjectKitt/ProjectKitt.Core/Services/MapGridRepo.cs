@@ -40,13 +40,13 @@ public class MapGridRepo : IMapGridRepo
             {
                Location = new PointF(7500,7500),
                UnitType = UnitType.Armor,
-               Facing = 90f
+               Orientation = 90f
             },
             new MapGridUnitObject
             {
                Location = new PointF(10500,7500),
                UnitType = UnitType.Armor,
-               Facing = 290f
+               Orientation = 290f
             },
          }
       };
@@ -76,19 +76,19 @@ public class MapGridRepo : IMapGridRepo
             {
                Location = new PointF(755,255),
                UnitType = UnitType.Armor,
-               Facing = 315f
+               Orientation = 315f
             },
             new MapGridUnitObject
             {
                Location = new PointF(760,310),
                UnitType = UnitType.MechInfantry,
-               Facing = 270f
+               Orientation = 270f
             },
             new MapGridUnitObject
             {
                Location = new PointF(750,500),
                UnitType = UnitType.Infantry,
-               Facing = 45f
+               Orientation = 45f
             }
          }
       };

@@ -82,13 +82,13 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
 
       using var facingPen = new Pen(color, 2);
 
-      var rayEnd = location.ComputeRayEndPoint(unitObject.Facing, facingMarkerLength);
+      var rayEnd = location.ComputeRayEndPoint(unitObject.Orientation, facingMarkerLength);
       g.DrawLine(facingPen, location, rayEnd);
 
-      var arrowHeadLeft = rayEnd.ComputeRayEndPoint(unitObject.Facing - arrowHeadAngle, arrowHeadLength);
+      var arrowHeadLeft = rayEnd.ComputeRayEndPoint(unitObject.Orientation - arrowHeadAngle, arrowHeadLength);
       g.DrawLine(facingPen, rayEnd, arrowHeadLeft);
 
-      var arrowHeadRight = rayEnd.ComputeRayEndPoint(unitObject.Facing + arrowHeadAngle, arrowHeadLength);
+      var arrowHeadRight = rayEnd.ComputeRayEndPoint(unitObject.Orientation + arrowHeadAngle, arrowHeadLength);
       g.DrawLine(facingPen, rayEnd, arrowHeadRight);
    }
 
@@ -97,13 +97,20 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
       var points = UnitObject.ZoneOfControl;
 
       var scaled = points.Select(point => point.ScaleBy(ScaleFactorValue)).ToList();
+      scaled = scaled.Offset(ViewPortOrigin).ToList();
       scaled.ClosePolygon();
 
       using var pen = new Pen(color, 1);
       g.DrawPolygon(pen, scaled.ToArray());
-      
+
       using var brush = new SolidBrush(ChangeColorBrightness(color, .5f));
       g.FillPolygon(brush, scaled.ToArray());
+
+      // using var pen2 = new Pen(Color.GreenYellow, 1);
+      // var zocCenter = location; //location.Offset(ViewPortOrigin);
+      // var zocRadius = UnitObject.ZoCRadius.ScaleBy(ScaleFactorValue);
+      // var zocCircle = new RectangleF(zocCenter.X - zocRadius, zocCenter.Y - zocRadius, zocRadius * 2, zocRadius * 2);
+      // g.DrawEllipse(pen2, zocCircle);
    }
 
    public static Color ChangeColorBrightness(Color color, float correctionFactor)

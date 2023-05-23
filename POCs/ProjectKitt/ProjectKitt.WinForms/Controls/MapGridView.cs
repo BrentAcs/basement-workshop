@@ -63,9 +63,19 @@ public partial class MapGridView : UserControl
 
    // --- Event Handlers
 
-   private void ThePanel_KeyDown(object? sender, KeyEventArgs e) { _controlKeyDown = e.Control; _shiftKeyDown = e.Shift; }
+   private void ThePanel_KeyDown(object? sender, KeyEventArgs e)
+   {
+      // System.Diagnostics.Debug.WriteLine($"{nameof(ThePanel_KeyDown)}: e.Control: {e.Control}, e.Shift: {e.Shift}");
+      _controlKeyDown = e.Control;
+      _shiftKeyDown = e.Shift;
+   }
 
-   private void ThePanel_KeyUp(object? sender, KeyEventArgs e) { _controlKeyDown = false; _shiftKeyDown = false; }
+   private void ThePanel_KeyUp(object? sender, KeyEventArgs e)
+   {
+      // System.Diagnostics.Debug.WriteLine($"{nameof(ThePanel_KeyUp)}: e.Control: {e.Control}, e.Shift: {e.Shift}");
+      _controlKeyDown = false;
+      _shiftKeyDown = false;
+   }
 
    private void TacticalGridView_Load(object sender, EventArgs e) => ResetView();
 
@@ -238,7 +248,7 @@ public partial class MapGridView : UserControl
       foreach (var mapGridObject in MapGrid.Objects)
       {
          _rendererFactory.GetRenderer(mapGridObject)
-            ?.Initialize(mapGridObject, ScaleFactor)
+            ?.Initialize(mapGridObject, ScaleFactor, ViewPortOrigin)
             .Render(g, ViewPortOrigin);
       }
    }

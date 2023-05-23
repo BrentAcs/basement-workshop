@@ -1,4 +1,5 @@
 ﻿using Bass.Shared.Extensions;
+using ProjectKitt.WinForms.Extensions;
 
 namespace ProjectKitt.Core.Extensions;
 
@@ -27,4 +28,7 @@ public static class PointFCollectionExtensions
       if( first != last)
          polygon.Add(first);
    }
+
+   public static IEnumerable<PointF> Offset(this IEnumerable<PointF> polygon, PointF offset) =>
+      polygon.Select(point => point.Offset(offset)).ToList();
 }

@@ -22,25 +22,27 @@ public enum UnitSize
 public interface IMapGridUnitObject : IMapGridObject
 {
    UnitType UnitType { get; }
-   float Facing { get; }
+   float Orientation { get; }
+   float ZoCRadius { get; }
    IEnumerable<PointF> ZoneOfControl { get; }
 }
 
 public class MapGridUnitObject : MapGridObject, IMapGridUnitObject
 {
+   private       const float _controlRadius = 2000;
    public UnitType UnitType { get; set;  } = UnitType.Armor;
-   public float Facing { get; set; }
+   public float Orientation { get; set; }
+   public float ZoCRadius { get; } = _controlRadius;
    public IEnumerable<PointF> ZoneOfControl => ComputeZoneOfControl();
 
    private IEnumerable<PointF> ComputeZoneOfControl()
    {
-      const float controlRadius = 2000;
       float[] angles = {330f, 30f, 90f, 150f, 210f, 270f};
 
       var points = angles
-         .Select(angle => Location.ComputeRayEndPoint(angle, controlRadius)).ToList();
+         .Select(angle => Location.ComputeRayEndPoint(angle, ZoCRadius)).ToList();
       
-      var rotated = points.ToRotatePolygon(Location, Facing);
+      var rotated = points.ToRotatePolygon(Location, Orientation);
 
       return rotated;
    }
