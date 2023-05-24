@@ -42,7 +42,7 @@ internal static class Program
          .AddSingleton<MainForm>()
          .AddSingleton<TestForm>()
          
-         .AddSingleton<IFactionCollection,FactionCollection>()
+         .AddSingleton<IFactionLookup,FactionLookup>()
          .AddSingleton<IMapGridRepo, MapGridRepo>()
          .AddSingleton<ITheGame, TheGame>()
          ;

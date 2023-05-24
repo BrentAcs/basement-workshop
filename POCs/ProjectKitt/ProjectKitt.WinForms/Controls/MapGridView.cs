@@ -57,7 +57,7 @@ public partial class MapGridView : UserControl
 
    // --- Properties - private
    private MapGrid MapGrid => _theGame.MapGrid;
-   private IFactionCollection Factions => _theGame.Factions;
+   private IFactionLookup Factions => _theGame.Factions;
    private SizeF ViewSize => new(thePanel.ClientSize.Width, thePanel.ClientSize.Height);
    private float ScaleFactorValue => ScaleFactor.GetScaleFactorValue();
 

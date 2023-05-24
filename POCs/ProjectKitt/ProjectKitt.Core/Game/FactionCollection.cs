@@ -1,6 +1,6 @@
 ﻿namespace ProjectKitt.Core.Game;
 
-public interface IFactionCollection
+public interface IFactionLookup
 {
    IEnumerable<IFaction> All { get; }
    void Add(IFaction faction);
@@ -16,12 +16,12 @@ public interface IFactionCollection
    FactionAffinity GetAffinity(IFaction source, IFaction target);
 }
 
-public class FactionCollection : IFactionCollection, IEqualityComparer<(string, string)>
+public class FactionLookup : IFactionLookup, IEqualityComparer<(string, string)>
 {
    private readonly IDictionary<string, IFaction> _factions;
    private readonly IDictionary<(string, string), FactionAffinity> _affinities;
    
-   public FactionCollection()
+   public FactionLookup()
    {
       _factions = new Dictionary<string, IFaction>(StringComparer.OrdinalIgnoreCase);
       _affinities = new Dictionary<(string, string), FactionAffinity>(this);

@@ -6,12 +6,12 @@ namespace ProjectKitt.Core.Game;
 public interface ITheGame
 {
    MapGrid MapGrid { get; }
-   IFactionCollection Factions { get; }   
+   IFactionLookup Factions { get; }   
 }
 
 public class TheGame : ITheGame
 {
-   public TheGame(IFactionCollection factions)
+   public TheGame(IFactionLookup factions)
    {
       Factions = factions;
       
@@ -19,18 +19,18 @@ public class TheGame : ITheGame
    }
 
    public MapGrid MapGrid { get; set; } = new();
-   public IFactionCollection Factions { get; }
+   public IFactionLookup Factions { get; }
 }
 
 public static  class MapGridCreator
 {
-   public static MapGrid Get(IFactionCollection factions)
+   public static MapGrid Get(IFactionLookup factions)
    {
       //return CreateSampleFor1To1();
       return CreateSampleForUnitSetup( factions);
    }
 
-   private static MapGrid CreateSampleForUnitSetup(IFactionCollection factions)
+   private static MapGrid CreateSampleForUnitSetup(IFactionLookup factions)
    {
       return new MapGrid
       {

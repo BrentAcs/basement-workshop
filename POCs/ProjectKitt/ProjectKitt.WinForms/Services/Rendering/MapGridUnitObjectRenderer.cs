@@ -33,7 +33,7 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
       g.DrawRectangle(pen, symbolRect);
 
       DrawUnitSymbol(g, pen, symbolRect);
-      DrawFacingIndicator(g, location, Color.DeepSkyBlue);
+      DrawOrientationIndicator(g, location, Color.DeepSkyBlue);
    }
 
    private void DrawUnitSymbol(Graphics g, Pen pen, RectangleF symbolRect)
@@ -71,7 +71,7 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
          symbolRect.Location with {X = symbolRect.Location.X + symbolRect.Width});
    }
 
-   private void DrawFacingIndicator(Graphics g, PointF location, Color color)
+   private void DrawOrientationIndicator(Graphics g, PointF location, Color color)
    {
       if (MapGridObject is not IMapGridUnitObject unitObject)
          throw new InvalidOperationException();
@@ -94,7 +94,7 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
 
    private void DrawZoneOfControl(Graphics g, PointF location, Color color)
    {
-      var points = UnitObject.ZoneOfControl;
+      var points = UnitObject.ZoneOfControlPoints;
 
       var scaled = points.Select(point => point.ScaleBy(ScaleFactorValue)).ToList();
       scaled = scaled.Offset(ViewPortOrigin).ToList();
