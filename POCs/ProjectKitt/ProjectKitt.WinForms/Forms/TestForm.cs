@@ -31,6 +31,9 @@ public partial class TestForm : Form
       Location = UserSettings.Default.MainForm_Location;
       Size = UserSettings.Default.MainForm_Size;
       theMapGridView.ScaleFactor = (ScaleFactor)UserSettings.Default.MainForm_ScaleFactor;
+      
+      //_theGame = Globals.TheGame;
+      //theMapGridView.SetGame(Globals.TheGame);
    }
 
    private void TestForm_FormClosed(object sender, FormClosedEventArgs e)

@@ -1,5 +1,4 @@
-﻿using ProjectKitt.Core.Extensions;
-using ProjectKitt.WinForms.Extensions;
+﻿using ProjectKitt.WinForms.Extensions;
 
 namespace ProjectKitt.WinForms.Services;
 

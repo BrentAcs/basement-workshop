@@ -24,17 +24,6 @@ public static class PointFExtensions
    public static bool IsInsideCircle(this IEnumerable<PointF> points, float radius) =>
       points.Any(point => point.IsInsideCircle(radius));
 
-   // public static bool InsideCircle(this PointF point, float radius, PointF? centeredAt = null)
-   // {
-   //    centeredAt ??= new PointF();
-   //
-   //    // Ref:  https://www.geeksforgeeks.org/check-if-a-point-is-inside-outside-or-on-the-ellipse/
-   //    double position = (Math.Pow((point.X - centeredAt.Value.X), 2) / Math.Pow(radius, 2)) +
-   //                      (Math.Pow((point.Y - centeredAt.Value.Y), 2) / Math.Pow(radius, 2));
-   //
-   //    return !(position > 1.0);
-   // }   
-   
    public static PointF Offset(this PointF point, PointF offset) =>
        new PointF(point.X - offset.X, point.Y - offset.Y);
 

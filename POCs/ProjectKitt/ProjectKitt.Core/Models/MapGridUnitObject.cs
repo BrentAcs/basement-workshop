@@ -23,7 +23,6 @@ public interface IMapGridUnitObject : IMapGridObject
    UnitSize UnitSize { get; }
    float Orientation { get; }
    float ZoneOfControlRadius { get; }
-   //IEnumerable<PointF> ZoneOfControlPoints { get; }
 }
 
 public class MapGridUnitObject : MapGridObject, IMapGridUnitObject
@@ -33,16 +32,4 @@ public class MapGridUnitObject : MapGridObject, IMapGridUnitObject
    public UnitSize UnitSize { get; set; } = UnitSize.Division;
    public float Orientation { get; set; }
    public float ZoneOfControlRadius { get; set; } = _controlRadius;
-   // public IEnumerable<PointF> ZoneOfControlPoints => ComputeZoneOfControl();
-   //
-   // private IEnumerable<PointF> ComputeZoneOfControl()
-   // {
-   //    const float start = 30f;
-   //    const float step = 60f;
-   //
-   //    var points = Location.ComputePointsAtRadius(ZoneOfControlRadius, start, step);
-   //    var rotated = points.ToRotatedPolygon(Location, Orientation);
-   //
-   //    return rotated;
-   // }
 }

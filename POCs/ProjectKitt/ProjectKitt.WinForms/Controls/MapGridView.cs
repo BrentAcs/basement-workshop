@@ -12,14 +12,14 @@ namespace ProjectKitt.WinForms.Controls;
 
 public partial class MapGridView : UserControl
 {
-   private readonly ITheGame _theGame;
+   private ITheGame? _theGame;
    private IMapGridObjectRendererFactory _rendererFactory = new MapGridObjectRendererFactory();
    private bool _controlKeyDown = false;
    private bool _shiftKeyDown = false;
 
    public MapGridView()
    {
-      _theGame = Globals.TheGame;
+      //_theGame = Globals.TheGame;
       InitializeComponent();
 
       thePanel.MouseWheel += ThePanel_MouseWheel;
@@ -30,12 +30,19 @@ public partial class MapGridView : UserControl
    protected override void OnLoad(EventArgs e)
    {
       base.OnLoad(e);
-      typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, thePanel, new object[] { true });
-      typeof(Panel).InvokeMember("SetStyle", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic, null, thePanel, new object[] { ControlStyles.AllPaintingInWmPaint, true });
-      typeof(Panel).InvokeMember("SetStyle", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic, null, thePanel, new object[] { ControlStyles.ResizeRedraw, true });
-      typeof(Panel).InvokeMember("SetStyle", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic, null, thePanel, new object[] { ControlStyles.UserPaint, true });
-      typeof(Panel).InvokeMember("SetStyle", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic, null, thePanel, new object[] { ControlStyles.OptimizedDoubleBuffer, true });
-      typeof(Panel).InvokeMember("UpdateStyles", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic, null, thePanel, new object[] { });
+      typeof(Panel).InvokeMember("DoubleBuffered",
+         BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, thePanel,
+         new object[] {true});
+      typeof(Panel).InvokeMember("SetStyle", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic,
+         null, thePanel, new object[] {ControlStyles.AllPaintingInWmPaint, true});
+      typeof(Panel).InvokeMember("SetStyle", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic,
+         null, thePanel, new object[] {ControlStyles.ResizeRedraw, true});
+      typeof(Panel).InvokeMember("SetStyle", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic,
+         null, thePanel, new object[] {ControlStyles.UserPaint, true});
+      typeof(Panel).InvokeMember("SetStyle", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic,
+         null, thePanel, new object[] {ControlStyles.OptimizedDoubleBuffer, true});
+      typeof(Panel).InvokeMember("UpdateStyles",
+         BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic, null, thePanel, new object[] { });
    }
 
    // --- Properties - public
@@ -56,7 +63,7 @@ public partial class MapGridView : UserControl
    public event EventHandler<ScaleFactorChangedArgs> ScaleFactorChanged;
 
    // --- Properties - private
-   private MapGrid MapGrid => _theGame.MapGrid;
+   private MapGrid MapGrid => (_theGame is not null) ? _theGame.MapGrid : new MapGrid();
    private IFactionLookup Factions => _theGame.Factions;
    private SizeF ViewSize => new(thePanel.ClientSize.Width, thePanel.ClientSize.Height);
    private float ScaleFactorValue => ScaleFactor.GetScaleFactorValue();
@@ -90,6 +97,12 @@ public partial class MapGridView : UserControl
 
    // --- Methods
 
+   public void SetGame(ITheGame theGame)
+   {
+      _theGame = theGame;
+      Invalidate();
+   }
+
    private void ResetView()
    {
       ScaleFactor = ScaleFactor._1To1;
@@ -120,7 +133,7 @@ public partial class MapGridView : UserControl
             var index = values.IndexOf(ScaleFactor);
             if (index > 0)
             {
-               ScaleFactor = values[index - 1];
+               ScaleFactor = values[ index - 1 ];
                CheckViewPortOrigin();
                OnScaleFactorChanged(new ScaleFactorChangedArgs(ScaleFactor));
             }
@@ -134,7 +147,7 @@ public partial class MapGridView : UserControl
             var index = values.IndexOf(ScaleFactor);
             if (index < values.Count - 1)
             {
-               ScaleFactor = values[index + 1];
+               ScaleFactor = values[ index + 1 ];
                CheckViewPortOrigin();
                OnScaleFactorChanged(new ScaleFactorChangedArgs(ScaleFactor));
             }
@@ -173,12 +186,14 @@ public partial class MapGridView : UserControl
       var newY = ViewPortOrigin.Y;
 
       if (newX > scaledGridSize.Width - ViewSize.Width)
-         newX = (float)(Math.Round((scaledGridSize.Width - ViewSize.Width) / ViewOptions.Grid.Step) * ViewOptions.Grid.Step);
+         newX = (float)(Math.Round((scaledGridSize.Width - ViewSize.Width) / ViewOptions.Grid.Step) *
+                        ViewOptions.Grid.Step);
       if (newX < 0)
          newX = 0;
 
       if (newY > scaledGridSize.Height - ViewSize.Height)
-         newY = (float)(Math.Round((scaledGridSize.Height - ViewSize.Height) / ViewOptions.Grid.Step) * ViewOptions.Grid.Step);
+         newY = (float)(Math.Round((scaledGridSize.Height - ViewSize.Height) / ViewOptions.Grid.Step) *
+                        ViewOptions.Grid.Step);
       if (newY < 0)
          newY = 0;
 
@@ -215,7 +230,8 @@ public partial class MapGridView : UserControl
             var value = $"{x.InverseScaleBy(ScaleFactorValue).ToMetricDistance()}";
             var valueSize = g.MeasureString(value, font);
             g.DrawString(value, font, textBrush, x - ViewPortOrigin.X - (valueSize.Width / 2), 0);
-            g.DrawString(value, font, textBrush, x - ViewPortOrigin.X - (valueSize.Width / 2), ViewSize.Height - valueSize.Height);
+            g.DrawString(value, font, textBrush, x - ViewPortOrigin.X - (valueSize.Width / 2),
+               ViewSize.Height - valueSize.Height);
          }
       }
 
@@ -238,7 +254,8 @@ public partial class MapGridView : UserControl
             var value = $"{y.InverseScaleBy(ScaleFactorValue).ToMetricDistance()}";
             var valueSize = g.MeasureString(value, font);
             g.DrawString(value, font, textBrush, 0, y - ViewPortOrigin.Y - (valueSize.Width / 2), format);
-            g.DrawString(value, font, textBrush, ViewSize.Width - valueSize.Height, y - ViewPortOrigin.Y - (valueSize.Width / 2), format);
+            g.DrawString(value, font, textBrush, ViewSize.Width - valueSize.Height,
+               y - ViewPortOrigin.Y - (valueSize.Width / 2), format);
          }
       }
    }
@@ -253,5 +270,3 @@ public partial class MapGridView : UserControl
       }
    }
 }
-
-
