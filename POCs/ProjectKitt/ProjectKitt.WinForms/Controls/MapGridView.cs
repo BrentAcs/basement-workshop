@@ -112,7 +112,7 @@ public partial class MapGridView : UserControl
 
    private void HandleMouseWheel(MouseEventArgs e)
    {
-      if (_shiftKeyDown)
+      if (_controlKeyDown)
       {
          if (e.Delta.IsNegative())
          {
@@ -145,22 +145,22 @@ public partial class MapGridView : UserControl
          return;
       }
 
-      if (e.Delta.IsPositive() && !_controlKeyDown)
+      if (e.Delta.IsPositive() && !_shiftKeyDown)
       {
          OffsetOrigin(0, -100);
       }
 
-      if (e.Delta.IsPositive() && _controlKeyDown)
+      if (e.Delta.IsPositive() && _shiftKeyDown)
       {
          OffsetOrigin(-100, 0);
       }
 
-      if (e.Delta.IsNegative() && !_controlKeyDown)
+      if (e.Delta.IsNegative() && !_shiftKeyDown)
       {
          OffsetOrigin(0, 100);
       }
 
-      if (e.Delta.IsNegative() && _controlKeyDown)
+      if (e.Delta.IsNegative() && _shiftKeyDown)
       {
          OffsetOrigin(100, 0);
       }
