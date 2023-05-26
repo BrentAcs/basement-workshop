@@ -1,4 +1,5 @@
 ﻿using ProjectKitt.Core.Extensions;
+using ProjectKitt.WinForms.Extensions;
 
 namespace ProjectKitt.WinForms.Services;
 
@@ -39,8 +40,8 @@ public class ViewPortRenderer
       foreach (var objPoints in renderedObject.ComplexPoints)
       {
          var points = ComputeObjectsPoints(objPoints, display);
-         var rotated = points.ToRotatePolygon(display, heading);
-         rotated.ClosePolygon();
+         var rotated = points.ToRotatedPolygon(display, heading);
+         rotated = rotated.ClosePolygon();
          g.DrawPolygon(pen, rotated.ToArray());
       }
    }

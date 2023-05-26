@@ -1,5 +1,6 @@
 ﻿using ProjectKitt.Core.Extensions;
 using ProjectKitt.Core.Models;
+using ProjectKitt.WinForms.Extensions;
 
 namespace ProjectKitt.WinForms.Services.Rendering;
 
@@ -17,10 +18,10 @@ public class MapGridStaticObjectRenderer : MapGridObjectRenderer, IMapGridObject
 
       var location = ScaleLocation(viewPortOrigin);
 
-      var points = ComputeObjectsPoints(staticObject.PerimeterPoints, location).ToList();
+      var points = ComputeObjectsPoints(staticObject.PerimeterPoints, location);
       //var rotated = points.ToRotatePolygon(display, heading);
 
-      points.ClosePolygon();
+      points = points.ClosePolygon();
       g.DrawPolygon(pen, points.ToArray());
       //g.FillPolygon(brush, points.ToArray());
    }

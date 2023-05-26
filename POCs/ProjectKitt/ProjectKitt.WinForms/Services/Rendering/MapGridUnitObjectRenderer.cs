@@ -94,11 +94,12 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
 
    private void DrawZoneOfControl(Graphics g, PointF location, Color color)
    {
-      var points = UnitObject.ZoneOfControlPoints;
+      //var points = UnitObject.ZoneOfControlPoints;
+      var points = UnitObject.Location.ComputePointsAtRadius(UnitObject.ZoneOfControlRadius);
 
-      var scaled = points.Select(point => point.ScaleBy(ScaleFactorValue)).ToList();
+      var scaled = points.Select(point => point.ScaleBy(ScaleFactorValue));
       scaled = scaled.Offset(ViewPortOrigin).ToList();
-      scaled.ClosePolygon();
+      scaled = scaled.ClosePolygon();
 
       using var pen = new Pen(color, 1);
       g.DrawPolygon(pen, scaled.ToArray());
@@ -106,9 +107,10 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
       using var brush = new SolidBrush(ChangeColorBrightness(color, .5f));
       g.FillPolygon(brush, scaled.ToArray());
 
+      // draw as circle
       // using var pen2 = new Pen(Color.GreenYellow, 1);
       // var zocCenter = location; //location.Offset(ViewPortOrigin);
-      // var zocRadius = UnitObject.ZoCRadius.ScaleBy(ScaleFactorValue);
+      // var zocRadius = UnitObject.ZoneOfControlRadius.ScaleBy(ScaleFactorValue);
       // var zocCircle = new RectangleF(zocCenter.X - zocRadius, zocCenter.Y - zocRadius, zocRadius * 2, zocRadius * 2);
       // g.DrawEllipse(pen2, zocCircle);
    }

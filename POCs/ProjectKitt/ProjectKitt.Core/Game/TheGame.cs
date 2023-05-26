@@ -65,6 +65,34 @@ public static  class MapGridCreator
                UnitType = UnitType.Armor,
                Orientation = 290f
             },
+            new MapGridUnitObject
+            {
+               Location = new PointF(7500,12500),
+               Owner = factions.Get(IFaction.Nato),
+               UnitType = UnitType.Armor,
+               Orientation = 90f
+            },
+            new MapGridUnitObject
+            {
+               Location = new PointF(12500,12500),
+               Owner = factions.Get(IFaction.Pact),
+               UnitType = UnitType.Armor,
+               Orientation = 290f
+            },
+            new MapGridUnitObject
+            {
+               Location = new PointF(7500,20000),
+               Owner = factions.Get(IFaction.Nato),
+               UnitType = UnitType.Armor,
+               Orientation = 90f
+            },
+            new MapGridUnitObject
+            {
+               Location = new PointF(11500,20000),
+               Owner = factions.Get(IFaction.Pact),
+               UnitType = UnitType.Armor,
+               Orientation = 290f
+            },
          }
       };
    }
