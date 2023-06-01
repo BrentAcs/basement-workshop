@@ -7,11 +7,30 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="TestFiles\GameScenarioShort.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="TestFiles\GameScenarioShort.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Dtos\" />
       <Folder Include="_Rnd\" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\Bass.Shared\Bass.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="12.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Update="TestFiles\GameScenarioShort.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

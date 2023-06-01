@@ -30,6 +30,7 @@
       {
          theMapGridView = new Controls.MapGridView();
          label1 = new Label();
+         reloadScenarioButton = new Button();
          SuspendLayout();
          // 
          // theMapGridView
@@ -39,24 +40,36 @@
          theMapGridView.AutoSize = true;
          theMapGridView.Location = new Point(12, 70);
          theMapGridView.Name = "theMapGridView";
-         theMapGridView.Size = new Size(917, 603);
+         theMapGridView.Size = new Size(922, 611);
          theMapGridView.TabIndex = 0;
          theMapGridView.ScaleFactorChanged += theMapGridView_ScaleFactorChanged;
          // 
          // label1
          // 
+         label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
          label1.AutoSize = true;
-         label1.Location = new Point(12, 19);
+         label1.Location = new Point(896, 9);
          label1.Name = "label1";
          label1.Size = new Size(38, 15);
          label1.TabIndex = 1;
          label1.Text = "label1";
          // 
+         // reloadScenarioButton
+         // 
+         reloadScenarioButton.Location = new Point(12, 12);
+         reloadScenarioButton.Name = "reloadScenarioButton";
+         reloadScenarioButton.Size = new Size(75, 23);
+         reloadScenarioButton.TabIndex = 2;
+         reloadScenarioButton.Text = "Reload Scenario";
+         reloadScenarioButton.UseVisualStyleBackColor = true;
+         reloadScenarioButton.Click += reloadScenarioButton_Click;
+         // 
          // TestForm
          // 
          AutoScaleDimensions = new SizeF(7F, 15F);
          AutoScaleMode = AutoScaleMode.Font;
-         ClientSize = new Size(941, 685);
+         ClientSize = new Size(946, 693);
+         Controls.Add(reloadScenarioButton);
          Controls.Add(label1);
          Controls.Add(theMapGridView);
          KeyPreview = true;
@@ -72,5 +85,6 @@
 
       private Controls.MapGridView theMapGridView;
       private Label label1;
+      private Button reloadScenarioButton;
    }
 }

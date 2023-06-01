@@ -100,7 +100,7 @@ public partial class MapGridView : UserControl
    public void SetGame(ITheGame theGame)
    {
       _theGame = theGame;
-      Invalidate();
+      thePanel.Invalidate();
    }
 
    private void ResetView()

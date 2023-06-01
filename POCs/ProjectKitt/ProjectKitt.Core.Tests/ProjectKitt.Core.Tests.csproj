@@ -31,4 +31,8 @@
       <Folder Include="_Rnd\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="TestFiles\GameScenarioShort.json" />
+    </ItemGroup>
+
 </Project>

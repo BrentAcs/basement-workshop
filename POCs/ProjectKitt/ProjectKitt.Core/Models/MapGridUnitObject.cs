@@ -27,9 +27,8 @@ public interface IMapGridUnitObject : IMapGridObject
 
 public class MapGridUnitObject : MapGridObject, IMapGridUnitObject
 {
-   private const float _controlRadius = 2000;
    public UnitType UnitType { get; set; } = UnitType.Armor;
    public UnitSize UnitSize { get; set; } = UnitSize.Division;
    public float Orientation { get; set; }
-   public float ZoneOfControlRadius { get; set; } = _controlRadius;
+   public float ZoneOfControlRadius { get; set; } = 4000;
 }

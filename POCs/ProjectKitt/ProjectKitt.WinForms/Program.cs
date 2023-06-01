@@ -18,11 +18,12 @@ internal static class Program
    {
       // To customize application configuration such as set high DPI settings or default font,
       // see https://aka.ms/applicationconfiguration.
-      ApplicationConfiguration.Initialize();
+      //ApplicationConfiguration.Initialize();
 
       var host = Host.CreateDefaultBuilder()
          .ConfigureServices((context, services) =>
          {
+            ConfigureAutoMapper(services);
             ConfigureServices(context.Configuration, services);
          })
          .Build();
@@ -36,8 +37,10 @@ internal static class Program
       UserSettings.Default.Save();
    }
 
-   private static void ConfigureServices(IConfiguration configuration, IServiceCollection services)
-   {
+   private static void ConfigureAutoMapper(IServiceCollection services) =>
+      services.AddAutoMapper(cfg => cfg.AddProfile(typeof(MappingProfile)));
+
+   private static void ConfigureServices(IConfiguration configuration, IServiceCollection services) =>
       services
          .AddSingleton<MainForm>()
          .AddSingleton<TestForm>()
@@ -45,14 +48,5 @@ internal static class Program
          .AddSingleton<IFactionLookup,FactionLookup>()
          .AddSingleton<IMapGridRepo, MapGridRepo>()
          .AddSingleton<ITheGame, TheGame>()
-         ;
-   }
-}
-
-public static class Globals
-{
-   public static IServiceProvider ServiceProvider { get; set; }
-
-   public static ITheGame TheGame => ServiceProvider.GetRequiredService<ITheGame>();
-   public static IMapGridRepo MapGridRepo => ServiceProvider.GetRequiredService<IMapGridRepo>();
+         .AddSingleton<ITheGameFactory, TheGameFactory>();
 }

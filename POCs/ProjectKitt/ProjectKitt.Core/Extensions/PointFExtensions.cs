@@ -59,7 +59,7 @@ public static class PointFExtensions
       return points;
    }
    
-   public static IEnumerable<PointF> ComputePointsAtRadius(this PointF location, float radius, float start=30f, float step=60f)
+   public static IEnumerable<PointF> ComputePointsAtRadius(this PointF location, float radius, float start=30f, float step=30f)
    {
       var points = new List<PointF>();
       for(float angle = start; angle <= 360; angle +=step)

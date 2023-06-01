@@ -1,0 +1,46 @@
+﻿{
+  "MapGrid": {
+    "Size": "100000, 100000"
+  },
+  "Objects": [
+    {
+      "$type": "ProjectKitt.Core.Models.Scenarios.GameScenarioMapGridUnitObject, ProjectKitt.Core",
+      "UnitType": "Armor",
+      "UnitSize": "Division",
+      "Orientation": 90.0,
+      "OnMap": true,
+      "Location": {
+        "IsEmpty": false,
+        "X": 7500.0,
+        "Y": 20000.0
+      },
+      "OwnerName": "Nato"
+    },
+    {
+      "$type": "ProjectKitt.Core.Models.Scenarios.GameScenarioMapGridUnitObject, ProjectKitt.Core",
+      "UnitType": "Armor",
+      "UnitSize": "Division",
+      "Orientation": 290.0,
+      "OnMap": true,
+      "Location": {
+        "IsEmpty": false,
+        "X": 11500.0,
+        "Y": 20000.0
+      },
+      "OwnerName": "Pact"
+    },
+    {
+      "$type": "ProjectKitt.Core.Models.Scenarios.GameScenarioMapGridUnitObject, ProjectKitt.Core",
+      "UnitType": "Armor",
+      "UnitSize": "Division",
+      "Orientation": 90.0,
+      "OnMap": false,
+      "Location": {
+        "IsEmpty": true,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      "OwnerName": "Nato"
+    }
+  ]
+}

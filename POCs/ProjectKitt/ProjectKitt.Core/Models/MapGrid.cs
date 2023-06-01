@@ -8,7 +8,11 @@ public class MapGrid
 
    public List<IMapGridObject> Objects { get; set; } = new();
 
+   [System.Text.Json.Serialization.JsonIgnore]
+   [Newtonsoft.Json.JsonIgnore]
    public IEnumerable<IMapGridStaticObject> StaticObjects => Objects.OfType<IMapGridStaticObject>();
+   
+   [System.Text.Json.Serialization.JsonIgnore]
+   [Newtonsoft.Json.JsonIgnore]
    public IEnumerable<IMapGridUnitObject> UnitObjects => Objects.OfType<IMapGridUnitObject>();
 }
-
