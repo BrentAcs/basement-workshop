@@ -58,5 +58,29 @@ namespace ProjectKitt.WinForms {
                 this["MainForm_ScaleFactor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowAreaOfControl {
+            get {
+                return ((bool)(this["ShowAreaOfControl"]));
+            }
+            set {
+                this["ShowAreaOfControl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowAreaOfControlPoints {
+            get {
+                return ((bool)(this["ShowAreaOfControlPoints"]));
+            }
+            set {
+                this["ShowAreaOfControlPoints"] = value;
+            }
+        }
     }
 }

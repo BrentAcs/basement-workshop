@@ -31,6 +31,8 @@
          theMapGridView = new Controls.MapGridView();
          label1 = new Label();
          reloadScenarioButton = new Button();
+         showAoCCheckBox = new CheckBox();
+         showAoCPointsCheckBox = new CheckBox();
          SuspendLayout();
          // 
          // theMapGridView
@@ -64,11 +66,35 @@
          reloadScenarioButton.UseVisualStyleBackColor = true;
          reloadScenarioButton.Click += reloadScenarioButton_Click;
          // 
+         // showAoCCheckBox
+         // 
+         showAoCCheckBox.AutoSize = true;
+         showAoCCheckBox.Location = new Point(93, 12);
+         showAoCCheckBox.Name = "showAoCCheckBox";
+         showAoCCheckBox.Size = new Size(81, 19);
+         showAoCCheckBox.TabIndex = 3;
+         showAoCCheckBox.Text = "Show AoC";
+         showAoCCheckBox.UseVisualStyleBackColor = true;
+         showAoCCheckBox.CheckedChanged += showAoCCheckBox_CheckedChanged;
+         // 
+         // showAoCPointsCheckBox
+         // 
+         showAoCPointsCheckBox.AutoSize = true;
+         showAoCPointsCheckBox.Location = new Point(93, 37);
+         showAoCPointsCheckBox.Name = "showAoCPointsCheckBox";
+         showAoCPointsCheckBox.Size = new Size(117, 19);
+         showAoCPointsCheckBox.TabIndex = 4;
+         showAoCPointsCheckBox.Text = "Show AoC Points";
+         showAoCPointsCheckBox.UseVisualStyleBackColor = true;
+         showAoCPointsCheckBox.CheckedChanged += showAoCPointsCheckBox_CheckedChanged;
+         // 
          // TestForm
          // 
          AutoScaleDimensions = new SizeF(7F, 15F);
          AutoScaleMode = AutoScaleMode.Font;
          ClientSize = new Size(946, 693);
+         Controls.Add(showAoCPointsCheckBox);
+         Controls.Add(showAoCCheckBox);
          Controls.Add(reloadScenarioButton);
          Controls.Add(label1);
          Controls.Add(theMapGridView);
@@ -86,5 +112,7 @@
       private Controls.MapGridView theMapGridView;
       private Label label1;
       private Button reloadScenarioButton;
+      private CheckBox showAoCCheckBox;
+      private CheckBox showAoCPointsCheckBox;
    }
 }

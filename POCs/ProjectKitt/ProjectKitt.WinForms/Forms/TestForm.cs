@@ -22,6 +22,10 @@ public partial class TestForm : Form
 
    private void reloadScenarioButton_Click(object sender, EventArgs e) => LoadGameFromScenario();
 
+   private void showAoCCheckBox_CheckedChanged(object sender, EventArgs e) => theMapGridView.ShowAreaOfControl = showAoCCheckBox.Checked;
+
+   private void showAoCPointsCheckBox_CheckedChanged(object sender, EventArgs e) => theMapGridView.ShowAreaOfControlPoints = showAoCPointsCheckBox.Checked;
+
    private void UpdateDisplayRatio() => label1.Text = theMapGridView.ScaleFactor.GetScaleFactorDisplayRatio();
 
    private void TestForm_Load(object sender, EventArgs e)
@@ -29,6 +33,8 @@ public partial class TestForm : Form
       Location = UserSettings.Default.MainForm_Location;
       Size = UserSettings.Default.MainForm_Size;
       theMapGridView.ScaleFactor = (ScaleFactor)UserSettings.Default.MainForm_ScaleFactor;
+      showAoCCheckBox.Checked = UserSettings.Default.ShowAreaOfControl;
+      showAoCPointsCheckBox.Checked = UserSettings.Default.ShowAreaOfControlPoints;
 
       LoadGameFromScenario();
    }
@@ -38,6 +44,8 @@ public partial class TestForm : Form
       UserSettings.Default.MainForm_Location = Location;
       UserSettings.Default.MainForm_Size = Size;
       UserSettings.Default.MainForm_ScaleFactor = (int)theMapGridView.ScaleFactor;
+      UserSettings.Default.ShowAreaOfControl = showAoCCheckBox.Checked;
+      UserSettings.Default.ShowAreaOfControlPoints = showAoCPointsCheckBox.Checked;
    }
 
    private void LoadGameFromScenario()

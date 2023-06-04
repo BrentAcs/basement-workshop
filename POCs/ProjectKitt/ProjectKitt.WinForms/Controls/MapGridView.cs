@@ -10,13 +10,16 @@ using ProjectKitt.WinForms.Services.Rendering;
 
 namespace ProjectKitt.WinForms.Controls;
 
-public partial class MapGridView : UserControl
+public partial class MapGridView : UserControl, IMapGridObjectRendererSettings
 {
    private ITheGame? _theGame;
    private IMapGridObjectRendererFactory _rendererFactory = new MapGridObjectRendererFactory();
    private bool _controlKeyDown = false;
    private bool _shiftKeyDown = false;
 
+   private bool _showAreaOfControl = false;
+   private bool _showAreaOfControlPoints= false;
+   
    public MapGridView()
    {
       //_theGame = Globals.TheGame;
@@ -58,6 +61,30 @@ public partial class MapGridView : UserControl
    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
    public ScaleFactor ScaleFactor { get; set; } = ScaleFactor._1To1;
 
+   [Browsable(false)]
+   [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+   public bool ShowAreaOfControl
+   {
+      get => _showAreaOfControl;
+      set
+      {
+         _showAreaOfControl = value;
+         thePanel.Invalidate();
+      }
+   }
+
+   [Browsable(false)]
+   [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+   public bool ShowAreaOfControlPoints
+   {
+      get => _showAreaOfControlPoints;
+      set
+      {
+         _showAreaOfControlPoints = value;
+         thePanel.Invalidate();
+      }
+   }
+   
    // --- Events
 
    public event EventHandler<ScaleFactorChangedArgs> ScaleFactorChanged;
@@ -265,8 +292,8 @@ public partial class MapGridView : UserControl
       foreach (var mapGridObject in MapGrid.Objects)
       {
          _rendererFactory.GetRenderer(mapGridObject)
-            ?.Initialize(mapGridObject, ScaleFactor, ViewPortOrigin)
-            .Render(g, ViewPortOrigin);
+            ?.Initialize(mapGridObject, this)
+            .Render(g);
       }
    }
 }

@@ -23,10 +23,10 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
       }
    }
 
-   public override void Render(Graphics g, PointF viewPortOrigin)
+   public override void Render(Graphics g)
    {
       using var pen = new Pen(Color.White, 2);
-      var location = ScaleLocation(viewPortOrigin);
+      var location = ScaleLocation(ViewPortOrigin);
       var symbolRect = _symbolRect.CenterOn(location);
 
       DrawAreaOfControl(g, location, UnitObject.Owner.Color);
@@ -94,24 +94,29 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
 
    private void DrawAreaOfControl(Graphics g, PointF location, Color color)
    {
-      var points = UnitObject.Location.ComputePointsAtRadius(UnitObject.AreaOfControlRadius);
+      if (Settings!.ShowAreaOfControl)
+      {
+         using var pen2 = new Pen(Color.GreenYellow, 1);
+         var zocCenter = location; //location.Offset(ViewPortOrigin);
+         var zocRadius = UnitObject.AreaOfControlRadius.ScaleBy(ScaleFactorValue);
+         var zocCircle = new RectangleF(zocCenter.X - zocRadius, zocCenter.Y - zocRadius, zocRadius * 2, zocRadius * 2);
+         g.DrawEllipse(pen2, zocCircle);
+      }
 
-      var scaled = points.Select(point => point.ScaleBy(ScaleFactorValue));
-      scaled = scaled.Offset(ViewPortOrigin).ToList();
-      scaled = scaled.ClosePolygon();
+      if (Settings!.ShowAreaOfControlPoints)
+      {
+         var points = UnitObject.Location.ComputePointsAtRadius(UnitObject.AreaOfControlRadius);
 
-      using var pen = new Pen(color, 1);
-      g.DrawPolygon(pen, scaled.ToArray());
+         var scaled = points.Select(point => point.ScaleBy(ScaleFactorValue));
+         scaled = scaled.Offset(ViewPortOrigin).ToList();
+         scaled = scaled.ClosePolygon();
 
-      using var brush = new SolidBrush(ChangeColorBrightness(color, .5f));
-      g.FillPolygon(brush, scaled.ToArray());
+         using var pen = new Pen(color, 1);
+         g.DrawPolygon(pen, scaled.ToArray());
 
-      // draw as circle
-      // using var pen2 = new Pen(Color.GreenYellow, 1);
-      // var zocCenter = location; //location.Offset(ViewPortOrigin);
-      // var zocRadius = UnitObject.ZoneOfControlRadius.ScaleBy(ScaleFactorValue);
-      // var zocCircle = new RectangleF(zocCenter.X - zocRadius, zocCenter.Y - zocRadius, zocRadius * 2, zocRadius * 2);
-      // g.DrawEllipse(pen2, zocCircle);
+         using var brush = new SolidBrush(ChangeColorBrightness(color, .5f));
+         g.FillPolygon(brush, scaled.ToArray());
+      }
    }
 
    public static Color ChangeColorBrightness(Color color, float correctionFactor)

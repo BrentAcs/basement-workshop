@@ -8,7 +8,7 @@ public class MapGridStaticObjectRenderer : MapGridObjectRenderer, IMapGridObject
 {
    public override bool CanRender(IMapGridObject mapGridObject) => mapGridObject is IMapGridStaticObject;
 
-   public override void Render(Graphics g, PointF viewPortOrigin)
+   public override void Render(Graphics g)
    {
       if (MapGridObject is not IMapGridStaticObject staticObject)
          throw new InvalidOperationException();
@@ -16,7 +16,7 @@ public class MapGridStaticObjectRenderer : MapGridObjectRenderer, IMapGridObject
       using var pen = new Pen(staticObject.PerimeterColor);
       using var brush = new SolidBrush(staticObject.PerimeterColor);
 
-      var location = ScaleLocation(viewPortOrigin);
+      var location = ScaleLocation(ViewPortOrigin);
 
       var points = ComputeObjectsPoints(staticObject.PerimeterPoints, location);
       //var rotated = points.ToRotatePolygon(display, heading);

@@ -6,37 +6,38 @@ namespace ProjectKitt.WinForms.Services.Rendering;
 public interface IMapGridObjectRenderer
 {
    bool CanRender(IMapGridObject mapGridObject);
-   IMapGridObjectRenderer Initialize(IMapGridObject mapGridObject, ScaleFactor scaleFactor, PointF viewPortOrigin);
-   void Render(Graphics g, PointF viewPortOrigin);
+   IMapGridObjectRenderer Initialize(IMapGridObject mapGridObject, IMapGridObjectRendererSettings settings);
+   void Render(Graphics g);
 }
 
-public class MapGridObjectRendererOptions
+public interface IMapGridObjectRendererSettings
 {
-}
+   ScaleFactor ScaleFactor { get; }
+   PointF ViewPortOrigin { get; }
+   bool ShowAreaOfControl { get;  }
+   bool ShowAreaOfControlPoints { get;  }
+} 
 
 public abstract class MapGridObjectRenderer : IMapGridObjectRenderer
 {
    protected IMapGridObject? MapGridObject { get; private set; }
-   protected PointF ViewPortOrigin { get; private set; }
-   protected PointF ScaledViewPortOrigin { get; private set; }
-   protected ScaleFactor ScaleFactor { get; private set; }
-   protected float ScaleFactorValue { get; private set; }
+   protected IMapGridObjectRendererSettings? Settings { get; private set; }
+
+   protected PointF ViewPortOrigin => Settings!.ViewPortOrigin;
+   protected PointF ScaledViewPortOrigin => ViewPortOrigin.ScaleBy(ScaleFactorValue);
+   protected ScaleFactor ScaleFactor => Settings!.ScaleFactor;
+   protected float ScaleFactorValue => ScaleFactor.GetScaleFactorValue();
 
    public abstract bool CanRender(IMapGridObject mapGridObject);
 
-   public IMapGridObjectRenderer Initialize(IMapGridObject mapGridObject, ScaleFactor scaleFactor,
-      PointF viewPortOrigin)
+   public IMapGridObjectRenderer Initialize(IMapGridObject mapGridObject, IMapGridObjectRendererSettings settings)
    {
       MapGridObject = mapGridObject;
-      ScaleFactor = scaleFactor;
-      ScaleFactorValue = ScaleFactor.GetScaleFactorValue();
-      ViewPortOrigin = viewPortOrigin;
-      ScaledViewPortOrigin = viewPortOrigin.ScaleBy(ScaleFactorValue);
-
+      Settings = settings;
       return this;
    }
 
-   public abstract void Render(Graphics g, PointF viewPortOrigin);
+   public abstract void Render(Graphics g /*, PointF viewPortOrigin*/);
 
    protected PointF ScaleLocation(PointF viewPortOrigin) => new(
       MapGridObject!.Location.X.ScaleBy(ScaleFactorValue) - viewPortOrigin.X,

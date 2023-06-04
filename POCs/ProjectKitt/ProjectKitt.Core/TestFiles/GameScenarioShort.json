@@ -12,7 +12,7 @@
       "Location": {
         "IsEmpty": false,
         "X": 7500.0,
-        "Y": 20000.0
+        "Y": 5000.0
       },
       "OwnerName": "Nato"
     },
@@ -20,12 +20,12 @@
       "$type": "ProjectKitt.Core.Models.Scenarios.GameScenarioMapGridUnitObject, ProjectKitt.Core",
       "UnitType": "Armor",
       "UnitSize": "Division",
-      "Orientation": 290.0,
+      "Orientation": 270.0,
       "OnMap": true,
       "Location": {
         "IsEmpty": false,
-        "X": 11500.0,
-        "Y": 20000.0
+        "X": 17500.0,
+        "Y": 5000.0
       },
       "OwnerName": "Pact"
     },
