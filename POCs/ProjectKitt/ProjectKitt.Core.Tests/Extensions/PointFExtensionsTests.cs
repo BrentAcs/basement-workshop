@@ -17,7 +17,7 @@ public class PointFExtensionsTests
          UnitType = UnitType.Armor,
          UnitSize = UnitSize.Division,
          Orientation = 90f,
-         ZoneOfControlRadius = 4000,
+         AreaOfControlRadius = 4000,
       };
       var unit2 = new MapGridUnitObject
       {
@@ -25,14 +25,14 @@ public class PointFExtensionsTests
          UnitType = UnitType.Armor,
          UnitSize = UnitSize.Division,
          Orientation = 290f,
-         ZoneOfControlRadius = 4000, 
+         AreaOfControlRadius = 4000, 
       };
 
-      var unit1ZoC = unit1.Location.ComputePointsAtRadius(unit1.ZoneOfControlRadius);
-      var unit2ZoC = unit2.Location.ComputePointsAtRadius(unit2.ZoneOfControlRadius);
+      var unit1ZoC = unit1.Location.ComputePointsAtRadius(unit1.AreaOfControlRadius);
+      var unit2ZoC = unit2.Location.ComputePointsAtRadius(unit2.AreaOfControlRadius);
 
-      bool is1Inside2 = unit1ZoC.IsInsideCircle(unit2.ZoneOfControlRadius);
-      bool is2Inside1 = unit2ZoC.IsInsideCircle(unit1.ZoneOfControlRadius);
+      bool is1Inside2 = unit1ZoC.IsInsideCircle(unit2.AreaOfControlRadius);
+      bool is2Inside1 = unit2ZoC.IsInsideCircle(unit1.AreaOfControlRadius);
 
       is1Inside2.Should().BeTrue();
       is2Inside1.Should().BeTrue();
@@ -47,7 +47,7 @@ public class PointFExtensionsTests
          UnitType = UnitType.Armor,
          UnitSize = UnitSize.Division,
          Orientation = 90f,
-         ZoneOfControlRadius = 4000,
+         AreaOfControlRadius = 4000,
       };
       var unit2 = new MapGridUnitObject
       {
@@ -55,14 +55,14 @@ public class PointFExtensionsTests
          UnitType = UnitType.Armor,
          UnitSize = UnitSize.Division,
          Orientation = 290f,
-         ZoneOfControlRadius = 4000, 
+         AreaOfControlRadius = 4000, 
       };
 
-      var unit1ZoC = unit1.Location.ComputePointsAtRadius(unit1.ZoneOfControlRadius);
-      var unit2ZoC = unit2.Location.ComputePointsAtRadius(unit2.ZoneOfControlRadius);
+      var unit1ZoC = unit1.Location.ComputePointsAtRadius(unit1.AreaOfControlRadius);
+      var unit2ZoC = unit2.Location.ComputePointsAtRadius(unit2.AreaOfControlRadius);
 
-      bool is1Inside2 = unit1ZoC.IsInsideCircle(unit2.ZoneOfControlRadius);
-      bool is2Inside1 = unit2ZoC.IsInsideCircle(unit1.ZoneOfControlRadius);
+      bool is1Inside2 = unit1ZoC.IsInsideCircle(unit2.AreaOfControlRadius);
+      bool is2Inside1 = unit2ZoC.IsInsideCircle(unit1.AreaOfControlRadius);
 
       is1Inside2.Should().BeFalse();
       is2Inside1.Should().BeFalse();
@@ -77,7 +77,7 @@ public class PointFExtensionsTests
          UnitType = UnitType.Armor,
          UnitSize = UnitSize.Division,
          Orientation = 90f,
-         ZoneOfControlRadius = 4000,
+         AreaOfControlRadius = 4000,
       };
       var unit2 = new MapGridUnitObject
       {
@@ -85,14 +85,14 @@ public class PointFExtensionsTests
          UnitType = UnitType.Armor,
          UnitSize = UnitSize.Division,
          Orientation = 290f,
-         ZoneOfControlRadius = 4000, 
+         AreaOfControlRadius = 4000, 
       };
 
-      var unit1ZoC = unit1.Location.ComputePointsAtRadius(unit1.ZoneOfControlRadius);
-      var unit2ZoC = unit2.Location.ComputePointsAtRadius(unit2.ZoneOfControlRadius);
+      var unit1ZoC = unit1.Location.ComputePointsAtRadius(unit1.AreaOfControlRadius);
+      var unit2ZoC = unit2.Location.ComputePointsAtRadius(unit2.AreaOfControlRadius);
 
-      bool is1Inside2 = unit1ZoC.IsInsideCircle(unit2.ZoneOfControlRadius);
-      bool is2Inside1 = unit2ZoC.IsInsideCircle(unit1.ZoneOfControlRadius);
+      bool is1Inside2 = unit1ZoC.IsInsideCircle(unit2.AreaOfControlRadius);
+      bool is2Inside1 = unit2ZoC.IsInsideCircle(unit1.AreaOfControlRadius);
 
       is1Inside2.Should().BeFalse();
       is2Inside1.Should().BeFalse();

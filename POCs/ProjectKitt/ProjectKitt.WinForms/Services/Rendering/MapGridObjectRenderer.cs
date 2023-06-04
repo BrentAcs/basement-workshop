@@ -10,6 +10,10 @@ public interface IMapGridObjectRenderer
    void Render(Graphics g, PointF viewPortOrigin);
 }
 
+public class MapGridObjectRendererOptions
+{
+}
+
 public abstract class MapGridObjectRenderer : IMapGridObjectRenderer
 {
    protected IMapGridObject? MapGridObject { get; private set; }
@@ -20,33 +24,25 @@ public abstract class MapGridObjectRenderer : IMapGridObjectRenderer
 
    public abstract bool CanRender(IMapGridObject mapGridObject);
 
-   public IMapGridObjectRenderer Initialize(IMapGridObject mapGridObject, ScaleFactor scaleFactor, PointF viewPortOrigin)
+   public IMapGridObjectRenderer Initialize(IMapGridObject mapGridObject, ScaleFactor scaleFactor,
+      PointF viewPortOrigin)
    {
-      System.Diagnostics.Debug.WriteLine($"{nameof(Initialize)}: viewPortOrigin: {viewPortOrigin}");
-
       MapGridObject = mapGridObject;
       ScaleFactor = scaleFactor;
       ScaleFactorValue = ScaleFactor.GetScaleFactorValue();
-      ViewPortOrigin = viewPortOrigin; 
+      ViewPortOrigin = viewPortOrigin;
       ScaledViewPortOrigin = viewPortOrigin.ScaleBy(ScaleFactorValue);
 
       return this;
    }
+
    public abstract void Render(Graphics g, PointF viewPortOrigin);
 
    protected PointF ScaleLocation(PointF viewPortOrigin) => new(
       MapGridObject!.Location.X.ScaleBy(ScaleFactorValue) - viewPortOrigin.X,
       MapGridObject.Location.Y.ScaleBy(ScaleFactorValue) - viewPortOrigin.Y);
 
-   protected IEnumerable<PointF> ComputeObjectsPoints(IEnumerable<PointF> objectPoints, PointF center)
-   {
-      var scaleFactor = ScaleFactor.GetScaleFactorValue();
-      var result = new List<PointF>();
-      foreach (var point in objectPoints)
-      {
-         result.Add(new PointF(center.X + point.X * scaleFactor, center.Y + point.Y * scaleFactor));
-      }
-
-      return result;
-   }
+   protected IEnumerable<PointF> ComputeObjectsPoints(IEnumerable<PointF> objectPoints, PointF center) =>
+      objectPoints.Select(point =>
+         new PointF(center.X + point.X * ScaleFactorValue, center.Y + point.Y * ScaleFactorValue)).ToList();
 }

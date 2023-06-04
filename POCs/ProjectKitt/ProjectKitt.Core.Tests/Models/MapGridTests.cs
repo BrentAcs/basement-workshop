@@ -38,7 +38,7 @@ public class MapGridTests
             UnitType = UnitType.Armor,
             UnitSize = UnitSize.Division,
             Orientation = 90f,
-            ZoneOfControlRadius = 4000,
+            AreaOfControlRadius = 4000,
          },
          new MapGridUnitObject
          {
@@ -47,7 +47,7 @@ public class MapGridTests
             UnitType = UnitType.Armor,
             UnitSize = UnitSize.Division,
             Orientation = 290f,
-            ZoneOfControlRadius = 4000,
+            AreaOfControlRadius = 4000,
          }
       }
    };

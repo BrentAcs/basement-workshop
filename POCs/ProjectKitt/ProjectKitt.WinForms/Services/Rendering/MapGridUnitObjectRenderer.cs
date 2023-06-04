@@ -29,7 +29,7 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
       var location = ScaleLocation(viewPortOrigin);
       var symbolRect = _symbolRect.CenterOn(location);
 
-      DrawZoneOfControl(g, location, UnitObject.Owner.Color);
+      DrawAreaOfControl(g, location, UnitObject.Owner.Color);
       g.DrawRectangle(pen, symbolRect);
 
       DrawUnitSymbol(g, pen, symbolRect);
@@ -92,10 +92,9 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
       g.DrawLine(facingPen, rayEnd, arrowHeadRight);
    }
 
-   private void DrawZoneOfControl(Graphics g, PointF location, Color color)
+   private void DrawAreaOfControl(Graphics g, PointF location, Color color)
    {
-      //var points = UnitObject.ZoneOfControlPoints;
-      var points = UnitObject.Location.ComputePointsAtRadius(UnitObject.ZoneOfControlRadius);
+      var points = UnitObject.Location.ComputePointsAtRadius(UnitObject.AreaOfControlRadius);
 
       var scaled = points.Select(point => point.ScaleBy(ScaleFactorValue));
       scaled = scaled.Offset(ViewPortOrigin).ToList();
