@@ -8,8 +8,8 @@ public static class RngExtensions
 
    public static T Next<T>(this IRng rng, IEnumerable<T> collection)
    {
-      var enumerable = collection.ToList();
-      return enumerable.ToList()[ rng.Next(0, enumerable.Count) ];
+      var enumerable = collection.ToArray();
+      return enumerable[ rng.Next(0, enumerable.Length) ];
    }
 
    // -- MinMax<T>
