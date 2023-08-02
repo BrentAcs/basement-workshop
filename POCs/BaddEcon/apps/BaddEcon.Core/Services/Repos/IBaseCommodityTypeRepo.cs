@@ -1,41 +1,46 @@
 ﻿using BaddEcon.Core.Models;
+using BaddEcon.Core.Services.Attributes;
 using Bass.Shared.Extensions;
 
 namespace BaddEcon.Core.Services.Repos;
 
-public interface IBaseCommodityTypeRepo<T, U> where T : IBaseCommodityType
+public interface IBaseCommodityTypeRepo<out TType, in TEnum> where TType : IBaseCommodityType
 {
-   IEnumerable<T> GetAll();
-   T Get(U value);
+   IEnumerable<TType> GetAll();
+   TType Get(TEnum value);
 }
 
-public abstract class BaseCommodityTypeRepo<T, U> : IBaseCommodityTypeRepo<T, U> where T : IBaseCommodityType
+public abstract class BaseCommodityTypeRepo<TType, TEnum> : IBaseCommodityTypeRepo<TType, TEnum>
+   where TType : IBaseCommodityType
 {
-   public abstract IEnumerable<T> GetAll();
-   public abstract T Get(U value);
+   public abstract IEnumerable<TType> GetAll();
+   public abstract TType Get(TEnum value);
 }
 
-public class RawResourceTypeRepo : BaseCommodityTypeRepo<IRawResourceType, RawResource>
+public interface IRawResourceTypeRepo : IBaseCommodityTypeRepo<IRawResourceType, RawResource>
 {
-   public override IEnumerable<IRawResourceType> GetAll()
-   {
-      var values = Enum.GetValues<RawResource>();
-
-      return Enum.GetValues<RawResource>()
-         .Select(value => (RawResourceType)value.GetAttributeOfType<RawResourceTypeAttribute>());
-   }
-
-   public override IRawResourceType Get(RawResource value) => (RawResourceType)value.GetAttributeOfType<RawResourceTypeAttribute>();
 }
 
-// public class RefinedResourceTypeRepo : BaseCommodityTypeRepo<IRefinedResourceType>
-// {
-//    public override IEnumerable<IRefinedResourceType> GetAll() =>throw new NotImplementedException();
-//       // new[]
-//       // {
-//       //    new RefinedResourceType {Id = 1, Name = "Refined Copper", Weight = 20,},
-//       //    new RefinedResourceType {Id = 2, Name = "Refined Iron", Weight = 20,},
-//       //    new RefinedResourceType {Id = 3, Name = "Refined Silver", Weight = 20,},
-//       //    new RefinedResourceType {Id = 4, Name = "Refined Titanium", Weight = 20,},
-//       // };
-// }
+public class RawResourceTypeRepo : BaseCommodityTypeRepo<IRawResourceType, RawResource>, IRawResourceTypeRepo
+{
+   public override IEnumerable<IRawResourceType> GetAll() =>
+      Enum.GetValues<RawResource>()
+         .Select(value => (RawResourceType)value.GetAttributeOfType<RawResourceAttribute>());
+
+   public override IRawResourceType Get(RawResource value) =>
+      (RawResourceType)value.GetAttributeOfType<RawResourceAttribute>();
+}
+
+public interface IRefinedResourceTypeRepo : IBaseCommodityTypeRepo<IRefinedResourceType, RefinedResource>
+{
+}
+
+public class RefinedResourceTypeRepo : BaseCommodityTypeRepo<IRefinedResourceType, RefinedResource>, IRefinedResourceTypeRepo
+{
+   public override IEnumerable<IRefinedResourceType> GetAll() =>
+      Enum.GetValues<RefinedResource>()
+         .Select(value => (RefinedResourceType)value.GetAttributeOfType<RefinedResourceAttribute>());
+
+   public override IRefinedResourceType Get(RefinedResource value) =>
+      (RefinedResourceType)value.GetAttributeOfType<RefinedResourceAttribute>();
+}

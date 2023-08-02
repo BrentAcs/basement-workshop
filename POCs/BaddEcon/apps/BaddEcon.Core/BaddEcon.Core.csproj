@@ -14,8 +14,5 @@
 
 
 
-    <ItemGroup>
-      <Folder Include="Services\Attributes\" />
-    </ItemGroup>
 
 </Project>
