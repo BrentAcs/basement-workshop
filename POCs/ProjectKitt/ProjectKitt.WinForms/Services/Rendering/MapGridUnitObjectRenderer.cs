@@ -94,13 +94,14 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
 
    private void DrawAreaOfControl(Graphics g, PointF location, Color color)
    {
+      color = ChangeColorBrightness(color, .5f);
       if (Settings!.ShowAreaOfControl)
       {
-         using var pen2 = new Pen(Color.GreenYellow, 1);
-         var zocCenter = location; //location.Offset(ViewPortOrigin);
-         var zocRadius = UnitObject.AreaOfControlRadius.ScaleBy(ScaleFactorValue);
-         var zocCircle = new RectangleF(zocCenter.X - zocRadius, zocCenter.Y - zocRadius, zocRadius * 2, zocRadius * 2);
-         g.DrawEllipse(pen2, zocCircle);
+         using var brush = new SolidBrush(color);
+         
+         var aocRadius = UnitObject.AreaOfControlRadius.ScaleBy(ScaleFactorValue);
+         var aocCircle = new RectangleF(location.X - aocRadius, location.Y - aocRadius, aocRadius * 2, aocRadius * 2);
+         g.FillEllipse(brush, aocCircle);
       }
 
       if (Settings!.ShowAreaOfControlPoints)
@@ -111,11 +112,8 @@ public class MapGridUnitObjectRenderer : MapGridObjectRenderer, IMapGridObjectRe
          scaled = scaled.Offset(ViewPortOrigin).ToList();
          scaled = scaled.ClosePolygon();
 
-         using var pen = new Pen(color, 1);
+         using var pen = new Pen(Color.White, 2);
          g.DrawPolygon(pen, scaled.ToArray());
-
-         using var brush = new SolidBrush(ChangeColorBrightness(color, .5f));
-         g.FillPolygon(brush, scaled.ToArray());
       }
    }
 
