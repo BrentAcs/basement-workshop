@@ -23,4 +23,9 @@
         </PackageReference>
     </ItemGroup>
 
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\apps\BaddEcon.Core\BaddEcon.Core.csproj" />
+    </ItemGroup>
+
 </Project>

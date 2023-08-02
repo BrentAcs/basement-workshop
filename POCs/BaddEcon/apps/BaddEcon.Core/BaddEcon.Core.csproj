@@ -6,4 +6,16 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\Common\Bass.Shared\Bass.Shared.csproj" />
+    </ItemGroup>
+
+
+
+    <ItemGroup>
+      <Folder Include="Services\Attributes\" />
+    </ItemGroup>
+
 </Project>
