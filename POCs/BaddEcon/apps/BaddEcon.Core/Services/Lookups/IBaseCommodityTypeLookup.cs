@@ -4,24 +4,24 @@ using Bass.Shared.Extensions;
 
 namespace BaddEcon.Core.Services.Repos;
 
-public interface IBaseCommodityTypeRepo<out TType, in TEnum> where TType : IBaseCommodityType
+public interface IBaseCommodityTypeLookup<out TType, in TEnum> where TType : IBaseCommodityType
 {
    IEnumerable<TType> GetAll();
    TType Get(TEnum value);
 }
 
-public abstract class BaseCommodityTypeRepo<TType, TEnum> : IBaseCommodityTypeRepo<TType, TEnum>
+public abstract class BaseCommodityTypeLookup<TType, TEnum> : IBaseCommodityTypeLookup<TType, TEnum>
    where TType : IBaseCommodityType
 {
    public abstract IEnumerable<TType> GetAll();
    public abstract TType Get(TEnum value);
 }
 
-public interface IRawResourceTypeRepo : IBaseCommodityTypeRepo<IRawResourceType, RawResource>
+public interface IRawResourceTypeLookup : IBaseCommodityTypeLookup<IRawResourceType, RawResource>
 {
 }
 
-public class RawResourceTypeRepo : BaseCommodityTypeRepo<IRawResourceType, RawResource>, IRawResourceTypeRepo
+public class RawResourceTypeLookup : BaseCommodityTypeLookup<IRawResourceType, RawResource>, IRawResourceTypeLookup
 {
    public override IEnumerable<IRawResourceType> GetAll() =>
       Enum.GetValues<RawResource>()
@@ -31,11 +31,11 @@ public class RawResourceTypeRepo : BaseCommodityTypeRepo<IRawResourceType, RawRe
       (RawResourceType)value.GetAttributeOfType<RawResourceAttribute>();
 }
 
-public interface IRefinedResourceTypeRepo : IBaseCommodityTypeRepo<IRefinedResourceType, RefinedResource>
+public interface IRefinedResourceTypeLookup : IBaseCommodityTypeLookup<IRefinedResourceType, RefinedResource>
 {
 }
 
-public class RefinedResourceTypeRepo : BaseCommodityTypeRepo<IRefinedResourceType, RefinedResource>, IRefinedResourceTypeRepo
+public class RefinedResourceTypeLookup : BaseCommodityTypeLookup<IRefinedResourceType, RefinedResource>, IRefinedResourceTypeLookup
 {
    public override IEnumerable<IRefinedResourceType> GetAll() =>
       Enum.GetValues<RefinedResource>()

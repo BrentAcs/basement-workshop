@@ -9,7 +9,7 @@ public class RawResourceTypeRepoTests
    [Fact]
    public void GetAll_WillReturn()
    {
-      var sut = new RawResourceTypeRepo();
+      var sut = new RawResourceTypeLookup();
       var result = sut.GetAll();
       result.Should().NotBeEmpty();
    }
@@ -17,7 +17,7 @@ public class RawResourceTypeRepoTests
    [Fact]
    public void Get_WillReturn()
    {
-      var sut = new RawResourceTypeRepo();
+      var sut = new RawResourceTypeLookup();
       var result = sut.Get(RawResource.CopperOre);
       result.Name.Should().Be("Copper Ore");
    }

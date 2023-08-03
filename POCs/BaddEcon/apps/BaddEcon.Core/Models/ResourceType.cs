@@ -16,13 +16,6 @@ public class BaseCommodityType : IBaseCommodityType
    public int Weight { get; init; }
 }
 
-public interface IProductionInput<out T> where T : IBaseCommodityType
-{
-   T CommodityType { get; }
-   int Quantity { get; }
-}
-
-
 //  --- Raw Resource
 
 public enum RawResource
@@ -48,7 +41,6 @@ public class RawResourceType : BaseCommodityType, IRawResourceType
 {
 }
 
-
 //  --- Refined Resource
 
 public enum RefinedResource
@@ -60,16 +52,27 @@ public enum RefinedResource
    IronIngot,
 }
 
+public interface IRawResourceInput
+{
+   RawResource Resource { get; }
+   int Quantity { get; }
+}
+
+public class RawResourceInput : IRawResourceInput
+{
+   public RawResource Resource { get; set; }
+   public int Quantity { get; set; }
+}
+
 public interface IRefinedResourceType : IBaseCommodityType
 {
-   // IEnumerable<IProductionInput<IRawResourceType>> RawInputs { get; }
+    IEnumerable<IRawResourceInput> RawInputs { get; }
 }
 
 public class RefinedResourceType : BaseCommodityType, IRefinedResourceType
 {
-   // public IEnumerable<IProductionInput<IRawResourceType>> RawInputs { get; set; } = new List<IProductionInput<IRawResourceType>>();
+   public IEnumerable<IRawResourceInput> RawInputs { get; set; } = new List<IRawResourceInput>();
 }
-
 
 //  --- Product
 
