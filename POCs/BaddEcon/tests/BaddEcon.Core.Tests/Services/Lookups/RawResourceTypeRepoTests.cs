@@ -1,10 +1,10 @@
 using BaddEcon.Core.Models;
-using BaddEcon.Core.Services.Repos;
+using BaddEcon.Core.Services.Lookups;
 using FluentAssertions;
 
-namespace BaddEcon.Core.Tests.Services.Repos;
+namespace BaddEcon.Core.Tests.Services.Lookups;
 
-public class RawResourceTypeRepoTests
+public class RawResourceTypeLookupTests
 {
    [Fact]
    public void GetAll_WillReturn()
