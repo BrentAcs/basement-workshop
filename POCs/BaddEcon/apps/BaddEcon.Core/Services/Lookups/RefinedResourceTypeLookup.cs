@@ -4,25 +4,39 @@ using Bass.Shared.Extensions;
 
 namespace BaddEcon.Core.Services.Lookups;
 
-public interface IRefinedResourceTypeLookup : IBaseCommodityTypeLookup<IRefinedResourceType, RefinedResource>
+public interface IRefinedResourceTypeLookup : IBaseCommodityTypeLookup<IRefinedResourceType>
 {
 }
 
-public class RefinedResourceTypeLookup : BaseCommodityTypeLookup<IRefinedResourceType, RefinedResource>,
+public class RefinedResourceTypeLookup : BaseCommodityTypeLookup<IRefinedResourceType>,
    IRefinedResourceTypeLookup
 {
-   public override IEnumerable<IRefinedResourceType> GetAll() =>
-      Enum.GetValues<RefinedResource>()
-         .Select(value => (RefinedResourceType)value.GetAttributeOfType<RefinedResourceAttribute>());
-
-   public override IRefinedResourceType Get(RefinedResource value)
+   private static readonly IEnumerable<IRefinedResourceType> _resources = new List<IRefinedResourceType>
    {
-      var refined = (RefinedResourceType)value.GetAttributeOfType<RefinedResourceAttribute>();
-      refined.RawInputs = value.GetAttributesOfType<RawResourceInputAttribute>()
-         .Select(attr => (RawResourceInput)attr)
-         .Cast<IRawResourceInput>()
-         .ToList();
-      
-      return refined;
+      //new RawResourceType{Id = , Name = "", Weight = },
+
+      // Metals
+      RefinedResourceType.Create(LookupConstants.CopperIngot, "Copper Ingot", 20,
+         new[] {new RawResourceInput {ResourceId = LookupConstants.CopperOre, Quantity = 2}}),
+      RefinedResourceType.Create(LookupConstants.IronIngot, "Iron Ingot", 20,
+         new[] {new RawResourceInput {ResourceId = LookupConstants.IronOre, Quantity = 2}}),
+
+      // Woods
+      RefinedResourceType.Create(LookupConstants.MapleLumber, "Maple Lumber", 20,
+         new[] {new RawResourceInput {ResourceId = LookupConstants.MapleWood, Quantity = 2}}),
+      RefinedResourceType.Create(LookupConstants.OakLumber, "Oak Lumber", 20,
+         new[] {new RawResourceInput {ResourceId = LookupConstants.OakWood, Quantity = 2}}),
+   };
+
+   public override IEnumerable<IRefinedResourceType> GetAll()
+   {
+      AssertValid(_resources);
+      return _resources;
+   }
+
+   public override IRefinedResourceType? Get(int id)
+   {
+      AssertValid(_resources);
+      return _resources.FirstOrDefault(_ => _.Id == id);
    }
 }

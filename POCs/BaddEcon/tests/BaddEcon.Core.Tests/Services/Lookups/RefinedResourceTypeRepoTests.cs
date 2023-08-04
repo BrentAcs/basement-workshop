@@ -18,7 +18,7 @@ public class RefinedResourceTypeLookupTests
    public void Get_WillReturn()
    {
       var sut = new RefinedResourceTypeLookup();
-      var result = sut.Get(RefinedResource.CopperIngot);
+      var result = sut.Get(LookupConstants.CopperIngot);
       result.Name.Should().Be("Copper Ingot");
       result.RawInputs.Should().ContainSingle();
    }

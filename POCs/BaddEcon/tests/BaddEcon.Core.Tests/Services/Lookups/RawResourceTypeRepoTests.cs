@@ -18,7 +18,7 @@ public class RawResourceTypeLookupTests
    public void Get_WillReturn()
    {
       var sut = new RawResourceTypeLookup();
-      var result = sut.Get(RawResource.CopperOre);
+      var result = sut.Get(LookupConstants.CopperOre);
       result.Name.Should().Be("Copper Ore");
    }
 }

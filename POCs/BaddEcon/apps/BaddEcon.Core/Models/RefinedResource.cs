@@ -1,20 +1,5 @@
-﻿using BaddEcon.Core.Services.Attributes;
+﻿namespace BaddEcon.Core.Models;
 
-namespace BaddEcon.Core.Models;
-
-public enum RefinedResource
-{
-   [RefinedResource("Copper Ingot", 10)]
-   [RawResourceInput(RawResource.CopperOre)]
-   CopperIngot = 1,
-
-   [RefinedResource("Iron Ingot", 10)]
-   [RawResourceInput(RawResource.IronOre)]
-   IronIngot,
-   
-   [RawResource("Maple Lumber", 10)]
-   MapleLumber,
-}
 
 public interface IRefinedResourceType : IBaseCommodityType
 {
@@ -23,5 +8,8 @@ public interface IRefinedResourceType : IBaseCommodityType
 
 public class RefinedResourceType : BaseCommodityType, IRefinedResourceType
 {
+   public static RefinedResourceType Create(int id, string name, int weight, params RawResourceInput[] rawInputs) => 
+      new() {Id = id, Name = name, Weight = weight, RawInputs = rawInputs};
+
    public IEnumerable<IRawResourceInput> RawInputs { get; set; } = new List<IRawResourceInput>();
 }
