@@ -1,8 +1,8 @@
 ﻿namespace Bass.Shared.Infrastructure.Storage;
 
-public class MongoRepository<TDoc> : IMongoRepository<TDoc> where TDoc : IMongoDocument
+public class MongoRepository<TDoc, TId> : IMongoRepository<TDoc, TId> where TDoc : IMongoDocument<TId> where TId : IEquatable<TId>
 {
-   public MongoRepository(IMongoContext? mongoContext, ILogger<MongoRepository<TDoc>> logger)
+   public MongoRepository(IMongoContext? mongoContext, ILogger<MongoRepository<TDoc, TId>> logger)
    {
       MongoContext = mongoContext;
       Logger = logger;
@@ -10,7 +10,7 @@ public class MongoRepository<TDoc> : IMongoRepository<TDoc> where TDoc : IMongoD
    }
 
    protected IMongoContext? MongoContext { get; set; }
-   protected ILogger<MongoRepository<TDoc>> Logger { get; }
+   protected ILogger<MongoRepository<TDoc, TId>> Logger { get; }
    protected IMongoCollection<TDoc> Collection { get; }
 
    // --- IMongoRepository
@@ -23,6 +23,14 @@ public class MongoRepository<TDoc> : IMongoRepository<TDoc> where TDoc : IMongoD
    public virtual Task SeedDataAsync(CancellationToken cancellationToken = default) =>
       Task.CompletedTask;
 
+   protected virtual async Task<bool> NeedsSeedDataAsync(CancellationToken cancellationToken = default)
+   {
+      var cursor = await Collection
+            .FindAsync(FilterDefinition<TDoc>.Empty, cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+      return !await cursor.AnyAsync(cancellationToken).ConfigureAwait(false);
+   }
+  
    // --- IMongoRepoCreate
 
    public virtual void InsertOne(TDoc document) =>
@@ -40,18 +48,18 @@ public class MongoRepository<TDoc> : IMongoRepository<TDoc> where TDoc : IMongoD
 
    // --- IMongoRepoRead
 
-   public virtual TDoc FindById(string id)
+   public virtual TDoc FindById(TId id)
    {
-      var objectId = new ObjectId(id);
-      var filter = Builders<TDoc>.Filter.Eq(doc => doc.Id, objectId);
+      //var objectId = new ObjectId(id);
+      var filter = Builders<TDoc>.Filter.Eq(doc => doc.Id, id);
       return Collection.Find(filter).SingleOrDefault();
    }
 
-   public virtual Task<TDoc> FindByIdAsync(string id, CancellationToken cancellationToken = default) =>
+   public virtual Task<TDoc> FindByIdAsync(TId id, CancellationToken cancellationToken = default) =>
       Task.Run(() =>
       {
-         var objectId = new ObjectId(id);
-         var filter = Builders<TDoc>.Filter.Eq(doc => doc.Id, objectId);
+         //var objectId = new ObjectId(id);
+         var filter = Builders<TDoc>.Filter.Eq(doc => doc.Id, id);
          return Collection.Find(filter).SingleOrDefaultAsync(cancellationToken);
       });
 
@@ -72,18 +80,18 @@ public class MongoRepository<TDoc> : IMongoRepository<TDoc> where TDoc : IMongoD
 
    // --- IMongoRepoDelete
 
-   public void DeleteById(string id)
+   public void DeleteById(TId id)
    {
-      var objectId = new ObjectId(id);
-      var filter = Builders<TDoc>.Filter.Eq(doc => doc.Id, objectId);
+      //var objectId = new ObjectId(id);
+      var filter = Builders<TDoc>.Filter.Eq(doc => doc.Id, id);
       Collection.FindOneAndDelete(filter);
    }
 
-   public Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default) =>
+   public Task DeleteByIdAsync(TId id, CancellationToken cancellationToken = default) =>
       Task.Run(() =>
       {
-         var objectId = new ObjectId(id);
-         var filter = Builders<TDoc>.Filter.Eq(doc => doc.Id, objectId);
+         // var objectId = new ObjectId(id);
+         var filter = Builders<TDoc>.Filter.Eq(doc => doc.Id, id);
          Collection.FindOneAndDeleteAsync(filter, cancellationToken: cancellationToken);
       });
 

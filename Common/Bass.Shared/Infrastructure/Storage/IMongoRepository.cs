@@ -9,7 +9,7 @@ public interface IMongoRepository
    Task SeedDataAsync(CancellationToken cancellationToken = default);
 }
 
-public interface IMongoRepoCreate<TDoc> where TDoc : IMongoDocument
+public interface IMongoRepoCreate<TDoc, TId> where TDoc : IMongoDocument<TId> where TId : IEquatable<TId> 
 {
    void InsertOne(TDoc document);
    Task InsertOneAsync(TDoc document, CancellationToken cancellationToken = default);
@@ -17,26 +17,26 @@ public interface IMongoRepoCreate<TDoc> where TDoc : IMongoDocument
    Task InsertManyAsync(ICollection<TDoc> documents, CancellationToken cancellationToken = default);
 }
 
-public interface IMongoRepoRead<TDoc> where TDoc : IMongoDocument
+public interface IMongoRepoRead<TDoc, TId> where TDoc : IMongoDocument<TId> where TId : IEquatable<TId>
 {
-   TDoc FindById(string id);
-   Task<TDoc> FindByIdAsync(string id, CancellationToken cancellationToken=default);
+   TDoc FindById(TId id);
+   Task<TDoc> FindByIdAsync(TId id, CancellationToken cancellationToken=default);
 #if USE_LINQ_TO_MONGO
    TDoc FindOne(Expression<Func<TDoc, bool>> filterExpression);
    Task<TDoc> FindOneAsync(Expression<Func<TDoc, bool>> filterExpression);
 #endif
 }
 
-public interface IMongoRepoUpdate<TDoc> where TDoc : IMongoDocument
+public interface IMongoRepoUpdate<TDoc, TId> where TDoc : IMongoDocument<TId> where TId : IEquatable<TId>
 {
    void ReplaceOne(TDoc document);
    Task ReplaceOneAsync(TDoc document, CancellationToken cancellationToken = default);
 }
 
-public interface IMongoRepoDelete<TDoc> where TDoc : IMongoDocument
+public interface IMongoRepoDelete<TDoc, TId> where TDoc : IMongoDocument<TId> where TId : IEquatable<TId>
 {
-   void DeleteById(string id);
-   Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default);
+   void DeleteById(TId id);
+   Task DeleteByIdAsync(TId id, CancellationToken cancellationToken = default);
 #if USE_LINQ_TO_MONGO
    void DeleteOne(Expression<Func<TDoc, bool>> filterExpression);
    Task DeleteOneAsync(Expression<Func<TDoc, bool>> filterExpression);
@@ -45,15 +45,15 @@ public interface IMongoRepoDelete<TDoc> where TDoc : IMongoDocument
 #endif
 }
 
-public interface IMongoRepoCrud<TDoc> :
-   IMongoRepoCreate<TDoc>,
-   IMongoRepoRead<TDoc>,
-   IMongoRepoUpdate<TDoc>,
-   IMongoRepoDelete<TDoc> where TDoc : IMongoDocument
+public interface IMongoRepoCrud<TDoc, TId> :
+   IMongoRepoCreate<TDoc, TId>,
+   IMongoRepoRead<TDoc, TId>,
+   IMongoRepoUpdate<TDoc, TId>,
+   IMongoRepoDelete<TDoc, TId> where TDoc : IMongoDocument<TId> where TId : IEquatable<TId>
 {
 }
 
-public interface IMongoRepoQueryable<TDoc> where TDoc : IMongoDocument
+public interface IMongoRepoQueryable<TDoc, TId> where TDoc : IMongoDocument<TId> where TId : IEquatable<TId>
 {
    IEnumerable<TDoc> All();
    IQueryable<TDoc> AsQueryable();
@@ -65,7 +65,7 @@ public interface IMongoRepoQueryable<TDoc> where TDoc : IMongoDocument
 #endif
 }
 
-public interface IMongoRepoPageable<TDoc> where TDoc : IMongoDocument
+public interface IMongoRepoPageable<TDoc, TId> where TDoc : IMongoDocument<TId> where TId : IEquatable<TId>
 {
    long CalcPageCount(long count, int pageSize);
 
@@ -76,10 +76,10 @@ public interface IMongoRepoPageable<TDoc> where TDoc : IMongoDocument
       int pageSize = 20);
 }
 
-public interface IMongoRepository<TDoc> :
+public interface IMongoRepository<TDoc, TId> :
    IMongoRepository,
-   IMongoRepoCrud<TDoc>,
-   IMongoRepoQueryable<TDoc>,
-   IMongoRepoPageable<TDoc> where TDoc : IMongoDocument
+   IMongoRepoCrud<TDoc, TId>,
+   IMongoRepoQueryable<TDoc, TId>,
+   IMongoRepoPageable<TDoc, TId> where TDoc : IMongoDocument<TId> where TId : IEquatable<TId>
 {
 }

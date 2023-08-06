@@ -1,6 +1,9 @@
-﻿namespace BaddEcon.Core.Models;
+﻿using Bass.Shared.Infrastructure.Storage;
+using MongoDB.Bson;
 
-public interface IBaseCommodityType
+namespace BaddEcon.Core.Models;
+
+public interface IBaseCommodityType : IMongoDocument<int>
 {
    int Id { get; }
    string Name { get; }
@@ -9,7 +12,7 @@ public interface IBaseCommodityType
 
 public class BaseCommodityType : IBaseCommodityType
 {
-   public int Id { get; init; }
-   public string Name { get; init; } = string.Empty;
-   public int Weight { get; init; }
+   public int Id { get; set; }
+   public string Name { get; set; } = string.Empty;
+   public int Weight { get; set; }
 }

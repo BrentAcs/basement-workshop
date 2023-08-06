@@ -1,25 +1,28 @@
 ﻿using BaddEcon.Core.Models;
+using Bass.Shared.Infrastructure.Storage;
 
 namespace BaddEcon.Core.Services.Lookups;
 
-public interface IBaseCommodityTypeLookup<out TType> where TType : IBaseCommodityType
+public interface IBaseCommodityTypeLookup<TType> where TType : IBaseCommodityType
 {
    IEnumerable<TType> GetAll();
-   TType? Get(int id);
+   TType Find(int id);
+   Task<TType> FindAsync(int id, CancellationToken cancellationToken=default);
 }
 
-public abstract class BaseCommodityTypeLookup<TType> : IBaseCommodityTypeLookup<TType>
-   where TType : IBaseCommodityType
+public abstract class BaseCommodityTypeLookup<TType> :
+   IBaseCommodityTypeLookup<TType> where TType : IBaseCommodityType
 {
-   public abstract IEnumerable<TType> GetAll();
-   public abstract TType? Get(int id);
-   
-   protected void AssertValid<T>(IEnumerable<T> collection) where T : IBaseCommodityType
+   private readonly IMongoRepository<TType, int> _repo;
+
+   protected BaseCommodityTypeLookup(IMongoRepository<TType, int> repo)
    {
-      if (collection.GroupBy(x => x.Id)
-          .Where(g => g.Count() > 1)
-          .Select(y => y.Key)
-          .Any())
-         throw new InvalidOperationException();
+      _repo = repo;
    }
+
+   public IEnumerable<TType> GetAll() => _repo.All();
+   public TType Find(int id) => _repo.FindById(id);
+
+   public Task<TType> FindAsync(int id, CancellationToken cancellationToken = default) =>
+      _repo.FindByIdAsync(id, cancellationToken);
 }
