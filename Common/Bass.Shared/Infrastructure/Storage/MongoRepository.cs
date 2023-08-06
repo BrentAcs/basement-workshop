@@ -28,6 +28,7 @@ public class MongoRepository<TDoc, TId> : IMongoRepository<TDoc, TId> where TDoc
       var cursor = await Collection
             .FindAsync(FilterDefinition<TDoc>.Empty, cancellationToken: cancellationToken)
             .ConfigureAwait(false);
+      
       return !await cursor.AnyAsync(cancellationToken).ConfigureAwait(false);
    }
   

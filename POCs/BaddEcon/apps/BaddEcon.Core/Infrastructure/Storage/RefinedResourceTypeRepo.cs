@@ -18,9 +18,14 @@ public class RefinedResourceTypeRepo : MongoRepository<RefinedResourceType, int>
 
    public override async Task SeedDataAsync(CancellationToken cancellationToken = default)
    {
-      if (!await NeedsSeedDataAsync(cancellationToken))
+      Logger.LogInformation("Attempting to seed data for {repo}", nameof(RefinedResourceTypeRepo));
+      if (!await NeedsSeedDataAsync(cancellationToken).ConfigureAwait(false))
+      {
+         Logger.LogInformation("Collection contains data, skipping");
          return;
+      }
 
+      Logger.LogInformation("Seeding....");
       await InsertManyAsync(new[]
          {
             new RefinedResourceType

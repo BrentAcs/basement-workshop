@@ -17,17 +17,40 @@ public class RawResourceTypeRepo : MongoRepository<RawResourceType, int>, IRawRe
 
    public override async Task SeedDataAsync(CancellationToken cancellationToken = default)
    {
+      Logger.LogInformation("Attempting to seed data for {repo}", nameof(RawResourceTypeRepo));
       if (!await NeedsSeedDataAsync(cancellationToken))
+      {
+         Logger.LogInformation("Collection contains data, skipping");
          return;
+      }
 
+      Logger.LogInformation("Seeding....");
       await InsertManyAsync(new[]
       {
-         new RawResourceType {Id = 1, Name = "Copper Ore", Weight = 20,},
-         new RawResourceType {Id = 2, Name = "Iron Ore", Weight = 20,},
-         
-         new RawResourceType {Id = 3, Name = "Maple Wood", Weight = 10,},
-         new RawResourceType {Id = 4, Name = "Oak Wood", Weight = 10,}
-
+         new RawResourceType
+         {
+            Id = 1,
+            Name = "Copper Ore",
+            Weight = 20,
+         },
+         new RawResourceType
+         {
+            Id = 2,
+            Name = "Iron Ore",
+            Weight = 20,
+         },
+         new RawResourceType
+         {
+            Id = 3,
+            Name = "Maple Wood",
+            Weight = 10,
+         },
+         new RawResourceType
+         {
+            Id = 4,
+            Name = "Oak Wood",
+            Weight = 10,
+         }
       }, cancellationToken).ConfigureAwait(false);
    }
 }

@@ -43,8 +43,22 @@ public sealed class ExampleHostedService : IHostedService
 
       Task.Run(async () =>
       {
-         await _rawResourceTypeRepo.SeedDataAsync().ConfigureAwait(false);
-         await _refinedResourceTypeRepo.SeedDataAsync().ConfigureAwait(false);
+         try
+         {
+            await _rawResourceTypeRepo.SeedDataAsync().ConfigureAwait(false);
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine(ex);            
+         }
+         try
+         {
+            await _refinedResourceTypeRepo.SeedDataAsync().ConfigureAwait(false);
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine(ex);            
+         }
       });
    }
 
