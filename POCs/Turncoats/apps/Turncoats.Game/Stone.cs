@@ -8,6 +8,7 @@
 
 public enum Stone
 {
+   None = 0,
    Red = 1,
    Blue,
    Black
