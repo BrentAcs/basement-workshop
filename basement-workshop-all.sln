@@ -53,6 +53,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Turncoats.CLI", "POCs\Turnc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turncoats.WinUI", "POCs\Turncoats\apps\Turncoats.WinUI\Turncoats.WinUI.csproj", "{CCA4079A-A337-40F5-8FB4-EBFCB0FD7621}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turncoats.Game.Tests", "POCs\Turncoats\tests\Turncoats.Game.Tests\Turncoats.Game.Tests.csproj", "{B7B3B19B-8E84-4F4D-898C-15B4B1F44310}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,10 @@ Global
 		{CCA4079A-A337-40F5-8FB4-EBFCB0FD7621}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCA4079A-A337-40F5-8FB4-EBFCB0FD7621}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCA4079A-A337-40F5-8FB4-EBFCB0FD7621}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7B3B19B-8E84-4F4D-898C-15B4B1F44310}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7B3B19B-8E84-4F4D-898C-15B4B1F44310}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7B3B19B-8E84-4F4D-898C-15B4B1F44310}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7B3B19B-8E84-4F4D-898C-15B4B1F44310}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,5 +139,6 @@ Global
 		{73A2482E-EE0F-4592-BC8A-FB529962DB01} = {085120F3-304B-4DC8-A3EA-081FB2890207}
 		{475F7BC6-4D2A-45B8-AA02-E7E3EE653C36} = {085120F3-304B-4DC8-A3EA-081FB2890207}
 		{CCA4079A-A337-40F5-8FB4-EBFCB0FD7621} = {085120F3-304B-4DC8-A3EA-081FB2890207}
+		{B7B3B19B-8E84-4F4D-898C-15B4B1F44310} = {7B65A475-468C-4256-A936-E871FFA9DC87}
 	EndGlobalSection
 EndGlobal
