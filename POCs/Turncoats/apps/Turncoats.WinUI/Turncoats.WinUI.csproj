@@ -8,4 +8,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Common\Bass.Shared\Bass.Shared.csproj" />
+    <ProjectReference Include="..\Turncoats.Game\Turncoats.Game.csproj" />
+  </ItemGroup>
+
 </Project>

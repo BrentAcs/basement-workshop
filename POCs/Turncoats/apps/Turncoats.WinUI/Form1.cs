@@ -1,4 +1,7 @@
-﻿namespace Turncoats.WinUI;
+﻿using System.Reflection;
+using Turncoats.Game;
+
+namespace Turncoats.WinUI;
 
 public partial class Form1 : Form
 {
@@ -7,30 +10,62 @@ public partial class Form1 : Form
       InitializeComponent();
    }
 
-   private int ColWidth { get; set; }
-   private float CircleDim => (float)(ColWidth * .8);
-   private float CirclePad => (float)(ColWidth * .2);
+   protected override void OnLoad(EventArgs e)
+   {
+      base.OnLoad(e);
+      typeof(Form).InvokeMember("DoubleBuffered",
+         BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, this,
+         new object[] { true });
+      typeof(Form).InvokeMember("SetStyle", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic,
+         null, this, new object[] { ControlStyles.AllPaintingInWmPaint, true });
+      typeof(Form).InvokeMember("SetStyle", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic,
+         null, this, new object[] { ControlStyles.ResizeRedraw, true });
+      typeof(Form).InvokeMember("SetStyle", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic,
+         null, this, new object[] { ControlStyles.UserPaint, true });
+      typeof(Form).InvokeMember("SetStyle", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic,
+         null, this, new object[] { ControlStyles.OptimizedDoubleBuffer, true });
+      typeof(Form).InvokeMember("UpdateStyles",
+         BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic, null, this, new object[] { });
+   }
+
+   private Map _map = new();
+   private MapRenderer _renderer = new();
 
    protected override void OnPaint(PaintEventArgs e)
    {
       base.OnPaint(e);
-      var g = e.Graphics;
-      var cs = ClientSize;
+      _renderer.Render(e.Graphics, _map, ClientSize);
 
-      ColWidth = cs.Width / 5;
-      var colCenter = ColWidth / 2;
+      //var g = e.Graphics;
+      //var cs = ClientSize;
 
-      var location = ComputeLocation(0, 0);
-      var rect = new RectangleF(location, new SizeF(CircleDim, CircleDim));
+      //ColWidth = new[] { cs.Width / _map.MaxSize.Width, cs.Height / _map.MaxSize.Height }.Min();
+      //var colCenter = ColWidth / 2;
 
-      using var pen = new Pen(Color.Green, 2);
-      g.DrawEllipse(pen, rect);
+      //using var pen = new Pen(Color.DimGray, 2);
+
+      //foreach (var zone in _map.Zones)
+      //{
+      //   var location = ComputeLocation(zone.Location.X, zone.Location.Y);
+      //   var rect = new RectangleF(location, new SizeF(CircleDim, CircleDim));
+      //   g.DrawEllipse(pen, rect);
+
+      //   if (zone.IsHome)
+      //   {
+      //      var center = rect.GetCenter();
+      //      var inner = new RectangleF( center, SizeF.Empty);
+      //      inner.Inflate(10,10);
+      //      g.DrawEllipse(pen, inner);
+
+      //   }
+      //}
    }
 
-   private Point ComputeLocation(int x, int y)
-   {
-      var location = new Point((int)(0 + CirclePad / 2), (int)(0 + CirclePad / 2));
-
-      return location;
-   }
 }
+
+public static class RectangleFExtensions
+{
+   public static PointF GetCenter(this RectangleF rect) 
+      => new(rect.X + rect.Width / 2, rect.Y + rect.Height / 2);
+}
+
