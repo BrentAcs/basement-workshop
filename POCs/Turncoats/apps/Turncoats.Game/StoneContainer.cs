@@ -4,6 +4,7 @@ public interface IStoneContainer
 {
    void Reset();
    int QuantityFor(Stone stone);
+   int TotalQuantity { get; }
    void Add(Stone stone);
    void Remove(Stone stone);
 }
@@ -21,6 +22,8 @@ public abstract class StoneContainer : IStoneContainer
    public void Reset() => _quantities = InitialState;
 
    public int QuantityFor(Stone stone) => _quantities[stone];
+
+   public int TotalQuantity => _quantities.Values.Sum();
 
    public void Add(Stone stone) => _quantities[stone]++;
 

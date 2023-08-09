@@ -1,4 +1,4 @@
-using FluentAssertions;
+﻿using FluentAssertions;
 
 namespace Turncoats.Game.Tests;
 
@@ -37,4 +37,23 @@ public class StonesForZoneTests
    
       result.Should().Be(expected);
    }
+
+   [Theory]
+   [InlineData(0, 0, 0, 0)]
+   [InlineData(1, 1, 1, 3)]
+   [InlineData(1, 0, 1, 2)]
+   [InlineData(0, 1, 1, 1)]
+   public void TotalQuantity_Theories(int redCount, int blueCount, int blackCount, int expected)
+   {
+      var sut = new StonesForZone();
+      for (int i = 0; i < redCount; i++)
+         sut.Add(Stone.Red);
+      for (int i = 0; i < blueCount; i++)
+         sut.Add(Stone.Blue);
+      for (int i = 0; i < blackCount; i++)
+         sut.Add(Stone.Black);
+
+      sut.TotalQuantity.Should().Be(expected);
+   }
+
 }
