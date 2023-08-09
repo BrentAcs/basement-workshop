@@ -42,7 +42,7 @@ public class StonesForZoneTests
    [InlineData(0, 0, 0, 0)]
    [InlineData(1, 1, 1, 3)]
    [InlineData(1, 0, 1, 2)]
-   [InlineData(0, 1, 1, 1)]
+   [InlineData(0, 1, 1, 2)]
    public void TotalQuantity_Theories(int redCount, int blueCount, int blackCount, int expected)
    {
       var sut = new StonesForZone();

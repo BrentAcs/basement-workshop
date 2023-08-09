@@ -1,4 +1,6 @@
-﻿using FluentAssertions;
+﻿using Bass.Shared.Utilities;
+using FluentAssertions;
+using Moq;
 
 namespace Turncoats.Game.Tests;
 
@@ -13,5 +15,20 @@ public class StonesReserveTests
       var sut = new StoneReserve();
       var result = sut.QuantityFor(stone);
       result.Should().Be(21);
+   }
+
+   [Theory]
+   [InlineData(Stone.Blue)]
+   public void GetRandom_Theories(Stone rndStone)
+   {
+      var rngMock = new Mock<IRng>();
+      rngMock.Setup(_ => _.Next(It.IsAny<int>()))
+         .Returns(((int) rndStone)-1);
+      var sut = new StoneReserve();
+      
+      var result = sut.GetRandom(rngMock.Object);
+
+      result.Should().Be(rndStone);
+      sut.QuantityFor(rndStone).Should().Be(20);
    }
 }

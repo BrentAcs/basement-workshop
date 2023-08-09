@@ -1,7 +1,11 @@
-﻿namespace Turncoats.Game;
+﻿using System.Runtime.CompilerServices;
+using Bass.Shared.Utilities;
+
+namespace Turncoats.Game;
 
 public interface IStoneReserve : IStoneContainer
 {
+   Stone GetRandom(IRng rng);
 }
 
 public class StoneReserve : StoneContainer, IStoneReserve
@@ -12,4 +16,21 @@ public class StoneReserve : StoneContainer, IStoneReserve
       {Stone.Blue, 21},
       {Stone.Black, 21},
    };
+
+   public Stone GetRandom(IRng rng)
+   {
+      if (TotalQuantity == 0)
+         return Stone.None;
+      
+      var stones = Enum.GetValues<Stone>().Where(_ => _ != Stone.None).ToList();
+      while (true)
+      {
+         var stone = stones[rng.Next(stones.Count)];
+         if (_quantities[stone] <= 0)
+            continue;
+         
+         Remove(stone);
+         return stone;
+      }
+   }
 }
