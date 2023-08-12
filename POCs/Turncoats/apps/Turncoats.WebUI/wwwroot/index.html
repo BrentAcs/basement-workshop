@@ -28,9 +28,12 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_content/Blazor.Extensions.Canvas/blazor.extensions.canvas.js"></script>
+    <script src="scripts/mapcanvas.js"></script>
     <script>
         function getDivCanvasOffsets(el) {
             var obj = {};
+            obj.clientWidth = el.clientWidth;
+            obj.clientHeight = el.clientHeight;
             obj.offsetLeft = el.offsetLeft;
             obj.offsetTop = el.offsetTop;
             return JSON.stringify(obj);
