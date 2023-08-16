@@ -12,7 +12,7 @@ using Turncoats.WebUI.Services;
 
 namespace Turncoats.WebUI.Pages;
 
-public partial class TurncoatsMap
+public partial class TurncoatsMapView
 {
    private Canvas2DContext _canvas2DContext;
    private IMapRenderer _mapRenderer = new MapRenderer();
@@ -25,12 +25,6 @@ public partial class TurncoatsMap
    public IJSRuntime jsRuntime { get; set; }
    [Inject]
    public IMapCanvasRuntime MapCanvasRuntime { get; set; }
-
-   public TurncoatsMap()
-   {
-      // _map = new StockMapGenerator().Generate();
-      // new StockMapPopulator().Populate(_map);
-   }
    
    protected override async Task OnAfterRenderAsync(bool firstRender)
    {

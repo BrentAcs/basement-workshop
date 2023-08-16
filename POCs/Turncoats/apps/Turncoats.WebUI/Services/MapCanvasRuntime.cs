@@ -40,9 +40,3 @@ public class MapCanvasRuntime : IMapCanvasRuntime
       };
    }
 }
-
-public class CanvasClientInfo
-{
-   public Size ClientSize { get; set; } = new();
-   public Point Offset { get; set; } = new();
-}
