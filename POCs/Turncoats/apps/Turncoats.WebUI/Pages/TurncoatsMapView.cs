@@ -30,9 +30,16 @@ public partial class TurncoatsMapView
    {
       if (firstRender)
       {
+         var info = await MapCanvasRuntime.GetClientInfo(_divCanvas);
+         var options = new MapRendererOptions
+         {
+            ClientSize = info.ClientSize,
+            Padding = new Size(info.Offset.X, info.Offset.Y)
+         };
+         
          _canvas2DContext = await _beCanvas.CreateCanvas2DAsync().ConfigureAwait(false);
          //await _canvas2DContext.SetTextBaselineAsync(TextBaseline.Top);
-         await _mapRenderer.Render(_canvas2DContext, _game.Map).ConfigureAwait(false);
+         await _mapRenderer.Render(_canvas2DContext, options, _game.Map).ConfigureAwait(false);
       }
    }
    
