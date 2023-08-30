@@ -17,8 +17,7 @@ public class TheGame : ITheGame
 
    public TheGame()
    {
-      Map = new StockMapGenerator().Generate();
-      new StockMapPopulator().Populate(Map, _stoneReserve, _rng);
+      Start();
    }
    
    public void Start()

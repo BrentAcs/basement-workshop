@@ -5,6 +5,10 @@ namespace Turncoats.WinUI;
 
 public partial class Form1 : Form
 {
+   private readonly MapRenderer _renderer = new();
+
+   private readonly ITheGame _game = new TheGame();
+
    public Form1()
    {
       InitializeComponent();
@@ -28,13 +32,13 @@ public partial class Form1 : Form
          BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic, null, this, new object[] { });
    }
 
-   private Map _map = new();
-   private MapRenderer _renderer = new();
-
    protected override void OnPaint(PaintEventArgs e)
    {
       base.OnPaint(e);
-      _renderer.Render(e.Graphics, _map, ClientSize);
+      if (!_game.Map.Zones.Any())
+         return;
+
+      _renderer.Render(e.Graphics, _game.Map, ClientSize);
 
       //var g = e.Graphics;
       //var cs = ClientSize;

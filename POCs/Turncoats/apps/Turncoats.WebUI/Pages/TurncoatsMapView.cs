@@ -1,12 +1,7 @@
-﻿using System.Drawing;
-using System.Net;
-using Blazor.Extensions;
-using Blazor.Extensions.Canvas.Canvas2D;
+﻿using Excubo.Blazor.Canvas;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Turncoats.Game;
 using Turncoats.WebUI.Services;
 
@@ -14,32 +9,48 @@ namespace Turncoats.WebUI.Pages;
 
 public partial class TurncoatsMapView
 {
-   private Canvas2DContext _canvas2DContext;
    private IMapRenderer _mapRenderer = new MapRenderer();
    private TheGame _game = new();
-   
-   public ElementReference _divCanvas;
-   public BECanvasComponent _beCanvas;
+
+   //private ElementReference _helperCanvas;
+   private Canvas _helperCanvas;
+   // public BECanvasComponent _beCanvas;
 
    [Inject]
    public IJSRuntime jsRuntime { get; set; }
-   [Inject]
-   public IMapCanvasRuntime MapCanvasRuntime { get; set; }
+   // [Inject]
+   // public IMapCanvasRuntime MapCanvasRuntime { get; set; }
    
    protected override async Task OnAfterRenderAsync(bool firstRender)
    {
       if (firstRender)
       {
-         var info = await MapCanvasRuntime.GetClientInfo(_divCanvas);
-         var options = new MapRendererOptions
-         {
-            ClientSize = info.ClientSize,
-            Padding = new Size(info.Offset.X, info.Offset.Y)
-         };
+         // var info = await MapCanvasRuntime.GetClientInfo(_helperCanvas);
+
          
-         _canvas2DContext = await _beCanvas.CreateCanvas2DAsync().ConfigureAwait(false);
-         //await _canvas2DContext.SetTextBaselineAsync(TextBaseline.Top);
-         await _mapRenderer.Render(_canvas2DContext, options, _game.Map).ConfigureAwait(false);
+         
+         await using var ctx = await _helperCanvas.GetContext2DAsync();
+         
+         await ctx.FontAsync("48px solid");
+         await ctx.FillTextAsync("Hello", 0, 150);
+
+         await ctx.FillStyleAsync("blue");
+         await ctx.BeginPathAsync();
+         await ctx.EllipseAsync(100,100,50,50,0,0,360);
+         await ctx.StrokeAsync();
+
+         // await ctx.FillRectAsync(20, 20, 100, 100);
+
+         // var info = await MapCanvasRuntime.GetClientInfo(_divCanvas);
+         // var options = new MapRendererOptions
+         // {
+         //    ClientSize = info.ClientSize,
+         //    Padding = new Size(info.Offset.X, info.Offset.Y)
+         // };
+         //
+         // _canvas2DContext = await _beCanvas.CreateCanvas2DAsync().ConfigureAwait(false);
+         // //await _canvas2DContext.SetTextBaselineAsync(TextBaseline.Top);
+         // await _mapRenderer.Render(_canvas2DContext, options, _game.Map).ConfigureAwait(false);
       }
    }
    
